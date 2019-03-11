@@ -2,6 +2,7 @@ export const exportState = state => {
     try {
         var gjson = gameJSON(state);
         console.log(gjson);
+        return gjson;
     } catch (err) {
       return null
     }

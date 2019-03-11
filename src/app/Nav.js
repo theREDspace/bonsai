@@ -21,7 +21,10 @@ import {
   updateScene
 } from "../store/actions"
 import { saveState } from "../store/localStorage"
+import { exportState } from "../store/export"
 import { focusedStore } from "../app/Scene"
+
+const download = require("downloadjs");
 
 const styles = {
   container: {
@@ -52,6 +55,14 @@ const styles = {
     display: "inline",
     margin: 0
   },
+  saveButtonContainer: {
+    position: "fixed",
+    left: "calc(70vw - 70px)",
+    top: "10px",
+    transition: "transform 900ms cubic-bezier(0.445, 0.05, 0.55, 0.95) 0ms",
+    display: "inline",
+    margin: 0
+  },
   button: {
     margin: "5px"
   },
@@ -78,6 +89,10 @@ class Nav extends Component {
 
   handleZoomSlider = (e, v) => {
     this.setState({ scale: v })
+  }
+
+  handleJSONDown = () =>{
+    download(exportState(focusedStore.getState()), "file.json", "text/plain")
   }
 
   handleNewNode = type => {
@@ -159,6 +174,17 @@ class Nav extends Component {
             />
           </ToolbarGroup>
         </Toolbar>
+        <div style={{ ...styles.saveButtonContainer, ...hideEditor }}>
+        <FloatingActionButton
+            mini={true}
+            onClick={() => this.handleJSONDown()}
+            style={styles.button}
+            secondary
+            data-tip={"Export JSON"}
+          >
+            <FontIcon className="material-icons">save_alt</FontIcon>
+          </FloatingActionButton>
+        </div>
         <div style={{ ...styles.buttonContainer, ...hideEditor }}>
           <FloatingActionButton
             mini={true}
