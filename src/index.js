@@ -9,11 +9,20 @@ import "./index.css"
 
 const muiTheme = createMuiTheme({
   palette: {
-    primary1Color: "#43a047",
-    primary2Color: "#558b2f",
-    accent1Color: "#33691e",
-    primary3Color: "#81c784",
-    pickerHeaderColor: "#009688"
+    primary: {
+      main : "#43a047"
+    },
+    secondary: {
+      main: "#558b2f"
+    },
+    textStyle: {
+      fontFamily: "Roboto Mono",
+      fontSize: 12,
+      color:"#ff0000"
+    },
+    tabContent: {
+      margin: "20px"
+    }
   }
 })
 

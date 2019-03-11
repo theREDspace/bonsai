@@ -8,20 +8,11 @@ import { updateNode } from "../../store/actions"
 const styles = {
   textStyle: {
     fontFamily: "Roboto Mono",
-    fontSize: 12
+    fontSize: 12,
+    color:"#ff0000"
   },
   tabContent: {
     margin: "20px"
-  },
-  tagWrapper: {
-    // display: "inline-flex",
-    // flexWrap: "wrap",
-    width: "100%"
-  },
-  tagChip: {
-    display: "inline-flex",
-    flexWrap: "wrap",
-    margin: "5px"
   }
 }
 
@@ -96,98 +87,60 @@ class EditTab extends Component {
       <MenuItem key={actor.name + i} value={i} primaryText={actor.name} />
     ))
 
-    const chipTags =
-      node &&
-      tags.map((tag, i) => (
-        <Chip
-          key={tag}
-          style={styles.tagChip}
-          onRequestDelete={() => this.handleDeleteTag(i)}
-        >
-          {tag}
-        </Chip>
-      ))
     return (
       <div style={styles.tabContent}>
         {type === "dialogue" && (
           <TextField
-            name="title"
-            fullWidth
-            textareaStyle={styles.textStyle}
-            floatingLabelFixed
-            floatingLabelText={<span>Title</span>}
+            label="title"
+            id="title"
+            style={styles.textStyle}
             value={node && title}
             onChange={e => this.handleTextUpdate(e, "title")}
+            margin="normal"
+            fullWidth
           />
         )}
-        {type === "dialogues" && (
-          <Select
-            name="actor"
-            fullWidth
-            floatingLabelFixed
-            floatingLabelText={<span>Actor</span>}
-            value={node && actor}
-            onChange={this.handleActorUpdate}
-          >
-            {menuItems}
-          </Select>
-        )}
         <TextField
-          name="tags"
+          label="conditions"
+          id="conditions"
+          style={styles.textStyle}
           fullWidth
-          textareaStyle={styles.textStyle}
-          floatingLabelFixed
-          floatingLabelText={<span>Tags</span>}
-          value={this.state.tagsField}
-          onKeyPress={this.handleTagsUpdate}
-        />
-        <div style={styles.tagsWrapper}>{chipTags}</div>
-        <TextField
-          name="conditions"
-          fullWidth
-          textareaStyle={styles.textStyle}
-          floatingLabelFixed
-          floatingLabelText={<span>Conditions</span>}
           value={(node && conditions) || ""}
           onChange={e => this.handleTextUpdate(e, "conditions")}
         />
         <TextField
-          name="body"
+          label="body"
+          id="body"
           multiLine
           fullWidth
-          textareaStyle={styles.textStyle}
-          floatingLabelFixed
-          floatingLabelText={<span>Body</span>}
+          style={styles.textStyle}
           value={node && body}
           onChange={e => this.handleTextUpdate(e, "body")}
         />
         <TextField
-          name="nextIntent"
+          id="nextIntent"
+          label="nextIntent"
           multiLine
           fullWidth
-          textareaStyle={styles.textStyle}
-          floatingLabelFixed
-          floatingLabelText={<span>Next Intent</span>}
+          style={styles.textStyle}
           value={node && nextIntent}
           onChange={e => this.handleTextUpdate(e, "nextIntent")}
         />
          <TextField
-          name="maxRetries"
+          id="maxRetries"
+          label="maxRetries"
           multiLine
           fullWidth
-          textareaStyle={styles.textStyle}
-          floatingLabelFixed
-          floatingLabelText={<span>Max Retries</span>}
+          style={styles.textStyle}
           value={node && maxRetries}
           onChange={e => this.handleTextUpdate(e, "maxRetries")}
         />
         <TextField
-          name="errorMessage"
+          id="errorMessage"
+          label="errorMessage"
           multiLine
           fullWidth
-          textareaStyle={styles.textStyle}
-          floatingLabelFixed
-          floatingLabelText={<span>Error Message</span>}
+          style={styles.textStyle}
           value={node && errorMessage}
           onChange={e => this.handleTextUpdate(e, "errorMessage")}
         />
