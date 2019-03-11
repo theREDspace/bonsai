@@ -1,13 +1,13 @@
 import React, { Fragment } from "react"
 import ReactDOM from "react-dom"
 import { BrowserRouter as Router, Route } from "react-router-dom"
-import { MuiThemeProvider, getMuiTheme } from "material-ui/styles/"
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles/"
 import registerServiceWorker from "./registerServiceWorker"
 import Landing from "./landing/Landing"
 import Scene from "./app/Scene"
 import "./index.css"
 
-const muiTheme = getMuiTheme({
+const muiTheme = createMuiTheme({
   palette: {
     primary1Color: "#43a047",
     primary2Color: "#558b2f",

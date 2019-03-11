@@ -4,21 +4,20 @@ import PropTypes from "prop-types"
 import {
   Table,
   TableBody,
-  TableHeader,
+  TableHead,
   TableRow,
-  TableRowColumn,
-  TableHeaderColumn,
+  TableCell,
   IconButton,
-  FontIcon,
-  FlatButton,
+  Icon,
+  Button,
   Popover,
   TextField
-} from "material-ui"
+} from "@material-ui/core"
 
 import { newKey, deleteKey } from "../../store/actions"
 
-// const editIcon = <FontIcon className="material-icons">mode_edit</FontIcon>
-const deleteIcon = <FontIcon className="material-icons">delete</FontIcon>
+// const editIcon = <Icon className="material-icons">mode_edit</Icon>
+const deleteIcon = <Icon className="material-icons">delete</Icon>
 
 const styles = {
   textStyle: {
@@ -94,7 +93,7 @@ class KeyTab extends Component {
     const { newKey, newDefault } = this.state
     return (
       <div style={styles.tabContent}>
-        <FlatButton label="New" primary={true} onClick={this.handleClick} />
+        <Button label="New" primary={true} onClick={this.handleClick} />
 
         <Popover
           open={this.state.open}
@@ -122,7 +121,7 @@ class KeyTab extends Component {
               value={newDefault}
               onChange={e => this.handleDefaultUpdate(e)}
             />
-            <FlatButton
+            <Button
               label="Submit"
               primary={true}
               onClick={this.handleNewKey}
@@ -130,19 +129,19 @@ class KeyTab extends Component {
           </div>
         </Popover>
         <Table selectable={false}>
-          <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
+          <TableHead adjustForCheckbox={false} displaySelectAll={false}>
             <TableRow>
-              <TableHeaderColumn>Field</TableHeaderColumn>
-              <TableHeaderColumn>Default</TableHeaderColumn>
-              <TableHeaderColumn>Options</TableHeaderColumn>
+              <TableHead>Field</TableHead>
+              <TableHead>Default</TableHead>
+              <TableHead>Options</TableHead>
             </TableRow>
-          </TableHeader>
+          </TableHead>
           <TableBody displayRowCheckbox={false}>
             {this.props.keys.map((data, i) => (
               <TableRow key={data.key}>
-                <TableRowColumn>{data.key}</TableRowColumn>
-                <TableRowColumn>{data.default}</TableRowColumn>
-                <TableRowColumn>
+                <TableCell>{data.key}</TableCell>
+                <TableCell>{data.default}</TableCell>
+                <TableCell>
                   <IconButton
                     style={styles.button}
                     iconStyle={styles.icon}
@@ -150,7 +149,7 @@ class KeyTab extends Component {
                   >
                     {deleteIcon}
                   </IconButton>
-                </TableRowColumn>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

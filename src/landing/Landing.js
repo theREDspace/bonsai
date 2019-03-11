@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import { Redirect } from "react-router-dom"
-import { List, ListItem, FontIcon, IconButton } from "material-ui"
+import { List, ListItem, Icon, IconButton, Divider, Button } from "@material-ui/core"
 import initialScene from "../store/initialScene"
 import { rnd } from "../lib/math"
 
@@ -43,6 +43,12 @@ export default class Landing extends Component {
     this.setState({ scenes: this.renderScenes() })
   }
 
+  handleChange = files =>{
+    this.setState({
+      files: files
+    });
+  }
+
   renderScenes = () => {
     let existingScenes = []
     for (let i = 0; i < localStorage.length; i++) {
@@ -59,7 +65,7 @@ export default class Landing extends Component {
               iconStyle={styles.icon}
               onClick={() => this.deleteScene(localStorage.key(i))}
             >
-              <FontIcon className="material-icons">delete</FontIcon>
+              <Icon className="material-icons">delete</Icon>
             </IconButton>
           }
         />
@@ -67,6 +73,7 @@ export default class Landing extends Component {
     }
     return existingScenes.sort((a, b) => a.key > b.key)
   }
+
   componentWillMount() {
     // TODO: Get this working properly
     window.navigator.webkitTemporaryStorage.queryUsageAndQuota(
@@ -100,6 +107,9 @@ export default class Landing extends Component {
           />
           {this.state.scenes}
         </List>
+        <Divider />
+        <h1>Upload .bonsai file</h1>
+        
       </div>
     )
   }

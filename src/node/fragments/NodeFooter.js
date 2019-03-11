@@ -1,6 +1,6 @@
 import React, { Fragment } from "react"
 import PropTypes from "prop-types"
-import { CardActions, IconButton, FontIcon } from "material-ui"
+import { CardActions, IconButton, Icon } from "@material-ui/core"
 import Corner from "./Corner"
 
 const styles = {
@@ -60,7 +60,7 @@ export default function NodeFooter({
             data-tip={"Delete"}
             data-tippos={"bottom"}
           >
-            <FontIcon className="material-icons">delete</FontIcon>
+            <Icon className="material-icons">delete</Icon>
           </IconButton>
         )}
         <IconButton
@@ -77,7 +77,7 @@ export default function NodeFooter({
           }
           data-tippos={"bottom"}
         >
-          <FontIcon className="material-icons">arrow_forward</FontIcon>
+          <Icon className="material-icons">arrow_forward</Icon>
         </IconButton>
         <IconButton
           style={styles.button}
@@ -86,7 +86,7 @@ export default function NodeFooter({
           data-tip={"Collapse"}
           data-tippos={"bottom"}
         >
-          <FontIcon className="material-icons">layers</FontIcon>
+          <Icon className="material-icons">layers</Icon>
         </IconButton>
       </CardActions>
       <Corner adjustWidth={adjustWidth} updateWidth={updateWidth} />

@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
-import { SelectField, TextField, MenuItem, FlatButton } from "material-ui"
+import { Select, TextField, MenuItem, Button } from "@material-ui/core"
 import { newActor, updateActor, deleteActor } from "../../store/actions"
 
 const styles = {
@@ -81,13 +81,13 @@ class ActorTab extends Component {
     ))
     return (
       <div style={styles.tabContent}>
-        <FlatButton label="New" primary={true} onClick={this.handleNewActor} />
-        <FlatButton
+        <Button label="New" primary={true} onClick={this.handleNewActor} />
+        <Button
           label="Delete"
           primary={true}
           onClick={() => deleteActor(actorIndex)}
         />
-        <SelectField
+        <Select
           name="Actors"
           value={actorIndex}
           onChange={this.handleActorChange}
@@ -96,7 +96,7 @@ class ActorTab extends Component {
           floatingLabelText={<span>Actor</span>}
         >
           {menuItems}
-        </SelectField>
+        </Select>
 
         <TextField
           name="Name"
@@ -108,7 +108,7 @@ class ActorTab extends Component {
           onChange={e => this.handleActorNameUpdate(e)}
         />
 
-        <SelectField
+        <Select
           name="Color"
           fullWidth
           floatingLabelFixed
@@ -130,9 +130,9 @@ class ActorTab extends Component {
               style={{ backgroundColor: `#${color}` }}
             />
           ))}
-        </SelectField>
+        </Select>
 
-        <SelectField
+        <Select
           name="Playable"
           fullWidth
           floatingLabelFixed
@@ -142,7 +142,7 @@ class ActorTab extends Component {
         >
           <MenuItem value={false} primaryText="No" />
           <MenuItem value={true} primaryText="Yes" />
-        </SelectField>
+        </Select>
         <TextField
           name="Description"
           fullWidth

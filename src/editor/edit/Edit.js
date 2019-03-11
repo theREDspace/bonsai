@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
-import { SelectField, TextField, MenuItem, Chip } from "material-ui"
+import { Select, TextField, MenuItem, Chip } from "@material-ui/core"
 import { makeGetNodeByCurrent } from "../../store/selectors"
 import { updateNode } from "../../store/actions"
 
@@ -121,7 +121,7 @@ class EditTab extends Component {
           />
         )}
         {type === "dialogues" && (
-          <SelectField
+          <Select
             name="actor"
             fullWidth
             floatingLabelFixed
@@ -130,7 +130,7 @@ class EditTab extends Component {
             onChange={this.handleActorUpdate}
           >
             {menuItems}
-          </SelectField>
+          </Select>
         )}
         <TextField
           name="tags"

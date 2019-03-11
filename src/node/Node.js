@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
-import { Card, CardText, Chip } from "material-ui"
+import { Card, Typography, Chip } from "@material-ui/core"
 import NodeHeader from "./fragments/NodeHeader"
 import NodeFooter from "./fragments/NodeFooter"
 
@@ -125,10 +125,10 @@ class Node extends Component {
             expand: this.handleExpandChange
           }}
         />
-        <CardText style={styles.body} expandable>
+        <Typography style={styles.body} expandable>
           {tags && <div style={styles.tagWrapper}>{chipTags}</div>}
           {body}
-        </CardText>
+        </Typography>
         <NodeFooter
           {...{
             id,

@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { CardHeader, FontIcon } from "material-ui"
+import { CardHeader, Icon } from "@material-ui/core"
 
 const styles = {
   title: {
@@ -51,13 +51,13 @@ export default function NodeHeader({
       className={"draggable"}
     >
       {/* Placing header in seperate file requires handling and create expand button manually   */}
-      <FontIcon
+      <Icon
         style={styles.expand}
         onClick={() => expand(!expanded)}
         className="material-icons"
       >
         {expanded ? "keyboard_arrow_up" : "keyboard_arrow_down"}
-      </FontIcon>
+      </Icon>
     </CardHeader>
   )
 }

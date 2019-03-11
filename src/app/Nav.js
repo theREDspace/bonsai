@@ -4,14 +4,12 @@ import { Redirect } from "react-router-dom"
 import PropTypes from "prop-types"
 import {
   Toolbar,
-  ToolbarTitle,
-  ToolbarGroup,
   TextField,
-  FloatingActionButton,
-  Slider,
-  FontIcon,
+  Fab,
+  Icon,
+  Typography,
   IconButton
-} from "material-ui"
+} from "@material-ui/core"
 import { rnd } from "../lib/math"
 import { gridSize } from "../lib/view"
 import {
@@ -57,7 +55,7 @@ const styles = {
   },
   saveButtonContainer: {
     position: "fixed",
-    left: "calc(70vw - 70px)",
+    left: "calc(70vw - 140px)",
     top: "10px",
     transition: "transform 900ms cubic-bezier(0.445, 0.05, 0.55, 0.95) 0ms",
     display: "inline",
@@ -93,6 +91,10 @@ class Nav extends Component {
 
   handleJSONDown = () =>{
     download(exportState(focusedStore.getState()), "file.json", "text/plain")
+  }
+
+  handleProjectDown = () =>{
+    download(JSON.stringify(focusedStore.getState()), "file.bonsai", "text/plain")
   }
 
   handleNewNode = type => {
@@ -152,7 +154,7 @@ class Nav extends Component {
     return (
       <Fragment>
         <Toolbar style={styles.container}>
-          <ToolbarGroup>
+          
             <IconButton
               tooltip="Home"
               onClick={() => {
@@ -160,9 +162,9 @@ class Nav extends Component {
                 this.setState({ redirect: "/" })
               }}
             >
-              <FontIcon className="material-icons">home</FontIcon>
+              <Icon className="material-icons">home</Icon>
             </IconButton>
-            <ToolbarTitle text="bonsai" style={styles.title} />
+            <Typography text="bonsai" style={styles.title} />
             <TextField
               name="scene"
               fullWidth
@@ -172,47 +174,48 @@ class Nav extends Component {
               onChange={this.handleSceneUpdate}
               value={scene}
             />
-          </ToolbarGroup>
+          
         </Toolbar>
         <div style={{ ...styles.saveButtonContainer, ...hideEditor }}>
-        <FloatingActionButton
+        <Fab
             mini={true}
             onClick={() => this.handleJSONDown()}
             style={styles.button}
             secondary
             data-tip={"Export JSON"}
           >
-            <FontIcon className="material-icons">save_alt</FontIcon>
-          </FloatingActionButton>
+            <Icon className="material-icons">save_alt</Icon>
+          </Fab>
+
+          <Fab
+            mini={true}
+            onClick={() => this.handleProjectDown()}
+            style={styles.button}
+            secondary
+            data-tip={"Export PROJECT"}
+          >
+            <Icon className="material-icons">save</Icon>
+          </Fab>
         </div>
         <div style={{ ...styles.buttonContainer, ...hideEditor }}>
-          <FloatingActionButton
+          <Fab
             mini={true}
             onClick={() => this.handleNewNode("choice")}
             style={styles.button}
             secondary
             data-tip={"New Choice"}
           >
-            <FontIcon className="material-icons">question_answer</FontIcon>
-          </FloatingActionButton>
-          <FloatingActionButton
+            <Icon className="material-icons">question_answer</Icon>
+          </Fab>
+          <Fab
             style={styles.button}
             onClick={() => this.handleNewNode("dialogue")}
             secondary
             data-tip={"New Dialogue"}
           >
-            <FontIcon className="material-icons md-48">chat</FontIcon>
-          </FloatingActionButton>
+            <Icon className="material-icons md-48">chat</Icon>
+          </Fab>
           <br />
-
-          <Slider
-            min={0.2}
-            max={1}
-            // step={zoomStep}
-            value={scale}
-            onChange={this.handleZoomSlider}
-            sliderStyle={{ marginTop: "5px" }}
-          />
         </div>
       </Fragment>
     )
