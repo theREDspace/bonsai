@@ -19,16 +19,6 @@ export default function NodeFooter({
         >
           <Icon className="material-icons">delete</Icon>
         </IconButton>
-        <IconButton
-          onClick={() =>
-            setFocusedLink({
-              status: true,
-              from: id
-            })
-          }
-        >
-          <Icon className="material-icons">arrow_forward</Icon>
-        </IconButton>
       </CardActions>
     </Fragment>
   )

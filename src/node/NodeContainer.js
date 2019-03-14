@@ -63,9 +63,9 @@ class NodeContainer extends Component {
 const makeMapState = () => {
   const getNode = makeGetNode()
   const getConnected = makeConnectedNodes()
-  return ({ nodes, actors, FocusedNode, FocusedLink, links }, { id }) => ({
+  return ({ nodes, FocusedNode, FocusedLink, links }, { id }) => ({
     node: {
-      ...getNode({ nodes, actors, FocusedNode }, { id }),
+      ...getNode({ nodes, FocusedNode }, { id }),
       ...getConnected({ links }, { id })
     },
     FocusedLink

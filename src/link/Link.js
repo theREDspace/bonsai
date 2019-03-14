@@ -8,11 +8,23 @@ export default function Link({
   linking,
   mouse,
   FocusedNode,
+  FocusedLink,
   deleteLink,
   setFocusedLink,
-  setFocusedNode
+  setFocusedNode,
 }) {
-  const fromBounds = document.getElementById(from).getBoundingClientRect()
+  let els = document.getElementById(from).getElementsByClassName("outNode")
+  let outindex = 0
+
+  if(FocusedLink.outIndex){
+    outindex = FocusedLink.outIndex
+
+    if(outindex >= els.length){
+      outindex--
+    }
+  }
+
+  const fromBounds = els[outindex].getBoundingClientRect()
   let toBounds
   const start = {
     x: fromBounds.left + window.scrollX + fromBounds.width / 2,
@@ -22,7 +34,7 @@ export default function Link({
   if (linking) {
     end = { x: mouse.pageX, y: mouse.pageY }
   } else {
-    toBounds = document.getElementById(to).getBoundingClientRect()
+    toBounds = document.getElementById(to).getElementsByClassName("inNode")[0].getBoundingClientRect()
     end = {
       x: toBounds.left + window.scrollX + toBounds.width / 2,
       y: toBounds.top + window.scrollY + toBounds.height / 2
@@ -63,13 +75,14 @@ export default function Link({
       onClick={() => {
         setFocusedNode({ id: from })
         deleteLink({ from, to })
-        setFocusedLink({ status: true, from })
+        setFocusedLink({ status: true, from, outIndex: FocusedLink.outIndex})
       }}
     />
   )
 }
 
 Link.propTypes = {
+  FocusedLink: PropTypes.object.isRequired,
   FocusedNode: PropTypes.bool.isRequired,
   from: PropTypes.string.isRequired,
   to: PropTypes.string,

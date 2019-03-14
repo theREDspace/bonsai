@@ -20,7 +20,7 @@ export default function HelpTab() {
   return (
     <div style={styles.container}>
       <Card style={styles.card}>
-        <CardHeader title={"General"} showExpandableButton actAsExpander />
+        <CardHeader title={"General"} showexpandablebutton actasexpander />
         <Typography expandable>
           <strong>What am I looking at?</strong>
           <p style={styles.text}>
@@ -44,7 +44,7 @@ export default function HelpTab() {
         </Typography>
       </Card>
       <Card style={styles.card}>
-        <CardHeader title={"Tree"} showExpandableButton actAsExpander />
+        <CardHeader title={"Tree"} showexpandablebutton actasexpander />
         <Typography expandable>
           <strong>New nodes</strong>
           <p style={styles.text}>
@@ -85,7 +85,7 @@ export default function HelpTab() {
         </Typography>
       </Card>
       <Card style={styles.card}>
-        <CardHeader title={"Editor"} showExpandableButton actAsExpander />
+        <CardHeader title={"Editor"} showexpandablebutton actasexpander />
         <Typography expandable>
           This is where the editor view help will go.
         </Typography>

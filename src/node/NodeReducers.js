@@ -1,4 +1,4 @@
-export const FocusedNode = (state = "", { type, id }) => {
+export const FocusedNode = (state = "", { type, id, index }) => {
   if (type === "SET_CURRENT_NODE") {
     return id
   }

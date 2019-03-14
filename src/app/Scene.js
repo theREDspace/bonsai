@@ -12,12 +12,12 @@ import { exportState } from "../store/export"
 export let focusedStore
 export default function Scene({ match }) {
   focusedStore = store(match.params.id)
-  focusedStore.subscribe(
+  focusedStore.subscribe(() => {
     throttle(() => {
       saveState(focusedStore.getState())
       exportState(focusedStore.getState())
     }, 1000)
-  )
+  })
 
   return (
     <Provider store={focusedStore}>

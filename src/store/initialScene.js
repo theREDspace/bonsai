@@ -18,16 +18,13 @@ export default function(id) {
         bounds: [210],
         linkable: true,
         collapsed: false,
-        actor: 0,
         conditions: ""
       }
     },
     links: [],
-    actors: [{ name: "Narrator", playable: false, color: "FFFFFF" }],
-    colors: ["FFFFFF", "94E495", "85B7A1", "486B8D", "554A6E", "501D47"],
     keys: [],
     editor: true,
     scale: 1,
-    warning: { status: false, warningMessage: "" }
+    warning: { status: false, warningMessage: "" },
   }
 }

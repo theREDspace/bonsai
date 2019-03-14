@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React, { Component, Fragment } from "react"
 import { connect } from "react-redux"
 import { Redirect } from "react-router-dom"
@@ -7,7 +8,6 @@ import {
   TextField,
   Fab,
   Icon,
-  Typography,
   IconButton
 } from "@material-ui/core"
 import { rnd } from "../lib/math"
@@ -21,6 +21,15 @@ import {
 import { saveState } from "../store/localStorage"
 import { exportState } from "../store/export"
 import { focusedStore } from "../app/Scene"
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormLabel from '@material-ui/core/FormLabel';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import Switch from '@material-ui/core/Switch';
+import { capitalize } from '@material-ui/core/utils/helpers';
+import SpeedDial from '@material-ui/lab/SpeedDial';
+import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
+import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
 
 const download = require("downloadjs");
 
@@ -47,8 +56,8 @@ const styles = {
   },
   buttonContainer: {
     position: "fixed",
-    left: "calc(70vw - 140px)",
-    top: "calc(100vh - 100px)",
+    left: "calc(70vw - 70px)",
+    bottom: 8,
     transition: "transform 900ms cubic-bezier(0.445, 0.05, 0.55, 0.95) 0ms",
     display: "inline",
     margin: 0
@@ -66,8 +75,39 @@ const styles = {
   },
   title: {
     color: "#558b2f"
-  }
+  },
+  controls: {
+    margin: 8 * 3,
+  },
+  exampleWrapper: {
+    position: 'relative',
+    height: 380,
+  },
+  radioGroup: {
+    margin: `${8}px 0`,
+  },
+  speedDial: {
+    position: 'absolute',
+    '&$directionUp, &$directionLeft': {
+      bottom: 8 * 2,
+      right: 8 * 3,
+    },
+    '&$directionDown, &$directionRight': {
+      top: 8 * 2,
+      left: 8 * 3,
+    },
+  },
+  directionUp: {},
+  directionRight: {},
+  directionDown: {},
+  directionLeft: {},
 }
+
+const actions = [
+  { icon: <Icon>chat</Icon>, name: 'Node' },
+  { icon: <Icon>question_answer</Icon>, name: 'MCQ' },
+  { icon: <Icon>scatter_plot</Icon>, name: 'Branch' },
+];
 
 class Nav extends Component {
   static propTypes = {
@@ -76,13 +116,15 @@ class Nav extends Component {
     setFocusedNode: PropTypes.func.isRequired,
     newNode: PropTypes.func.isRequired,
     editor: PropTypes.bool.isRequired,
-    scale: PropTypes.number.isRequired,
     scene: PropTypes.string.isRequired
   }
 
   state = {
     redirect: "",
-    fileOpen: false
+    fileOpen: false,
+    direction: 'up',
+    open: false,
+    hidden: false,
   }
 
   handleZoomSlider = (e, v) => {
@@ -97,12 +139,30 @@ class Nav extends Component {
     download(JSON.stringify(focusedStore.getState()), "file.bonsai", "text/plain")
   }
 
+  handleClick = actionName => {
+    this.setState(state => ({
+      open: !state.open,
+    }));
+
+    console.log(actionName)
+    this.handleNewNode(actionName)
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+
+  handleOpen = () => {
+    this.setState({ open: true });
+  };
+
   handleNewNode = type => {
+    console.log(type)
     const { newNode, setFocusedNode, scale } = this.props
     const newId = rnd()
     const diffs =
-      type === "dialogue"
-        ? { actor: 0, body: "new dialogue" }
+      type === "Node"
+        ? { body: "new dialogue" }
         : { body: "new choice" }
     const newPos = [
       Math.round(
@@ -122,7 +182,6 @@ class Nav extends Component {
         id: newId,
         type,
         title: "untitled",
-        tags: [],
         pos: newPos,
         linkable: true,
         collapsed: false,
@@ -144,17 +203,25 @@ class Nav extends Component {
   }
 
   render() {
-    const { scale, scene } = this.props
+    const { scene } = this.props
     const hideEditor = {
       transform: !this.props.editor ? "translateX(28vw)" : "translateX(0)"
     }
     if (this.state.redirect) {
       return <Redirect to={this.state.redirect} />
     }
+
+    const { classes } = this.props;
+    const { direction, hidden, open } = this.state;
+
+    const speedDialClassName = classNames(
+      styles.speedDial,
+      styles[`direction${capitalize(direction)}`],
+    );
+
     return (
       <Fragment>
         <Toolbar style={styles.container}>
-          
             <IconButton
               tooltip="Home"
               onClick={() => {
@@ -164,13 +231,12 @@ class Nav extends Component {
             >
               <Icon className="material-icons">home</Icon>
             </IconButton>
-            <Typography text="bonsai" style={styles.title} />
             <TextField
               name="scene"
               fullWidth
               style={styles.textField}
-              textareaStyle={styles.textStyle}
-              hintText="Scene"
+              textareastyle={styles.textStyle}
+              hinttext="Scene"
               onChange={this.handleSceneUpdate}
               value={scene}
             />
@@ -178,44 +244,45 @@ class Nav extends Component {
         </Toolbar>
         <div style={{ ...styles.saveButtonContainer, ...hideEditor }}>
         <Fab
-            mini={true}
             onClick={() => this.handleJSONDown()}
             style={styles.button}
-            secondary
             data-tip={"Export JSON"}
           >
             <Icon className="material-icons">save_alt</Icon>
           </Fab>
 
           <Fab
-            mini={true}
             onClick={() => this.handleProjectDown()}
             style={styles.button}
-            secondary
             data-tip={"Export PROJECT"}
           >
             <Icon className="material-icons">save</Icon>
           </Fab>
         </div>
         <div style={{ ...styles.buttonContainer, ...hideEditor }}>
-          <Fab
-            mini={true}
-            onClick={() => this.handleNewNode("choice")}
-            style={styles.button}
-            secondary
-            data-tip={"New Choice"}
+          <SpeedDial
+            ariaLabel="SpeedDial example"
+            className={speedDialClassName}
+            hidden={hidden}
+            icon={<SpeedDialIcon />}
+            onBlur={this.handleClose}
+            onClick={this.handleClick}
+            onClose={this.handleClose}
+            onFocus={this.handleOpen}
+            onMouseEnter={this.handleOpen}
+            onMouseLeave={this.handleClose}
+            open={open}
+            direction={direction}
           >
-            <Icon className="material-icons">question_answer</Icon>
-          </Fab>
-          <Fab
-            style={styles.button}
-            onClick={() => this.handleNewNode("dialogue")}
-            secondary
-            data-tip={"New Dialogue"}
-          >
-            <Icon className="material-icons md-48">chat</Icon>
-          </Fab>
-          <br />
+            {actions.map(action => (
+              <SpeedDialAction
+                key={action.name}
+                icon={action.icon}
+                tooltipTitle={action.name}
+                onClick={()=>{this.handleClick(action.name)}}
+              />
+            ))}
+          </SpeedDial>
         </div>
       </Fragment>
     )

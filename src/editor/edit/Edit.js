@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
-import { Select, TextField, MenuItem, Chip } from "@material-ui/core"
+import { TextField } from "@material-ui/core"
 import { makeGetNodeByCurrent } from "../../store/selectors"
 import { updateNode } from "../../store/actions"
 
@@ -18,48 +18,12 @@ const styles = {
 
 class EditTab extends Component {
   static propTypes = {
-    actors: PropTypes.arrayOf(PropTypes.object).isRequired,
     node: PropTypes.object,
     updateNode: PropTypes.func.isRequired
   }
 
   state = {
     node: {},
-    tagsField: ""
-  }
-
-  handleTagsUpdate = event => {
-    this.setState({ tagsField: this.state.tagsField + event.key })
-    const { updateNode, node } = this.props
-    const { tags } = node
-    if (event.key === "Enter") {
-      updateNode({
-        id: node.id,
-        payload: {
-          tags: tags ? [...tags, event.target.value] : [event.target.value]
-        }
-      })
-      this.setState({ tagsField: "" })
-    }
-  }
-
-  handleDeleteTag = index => {
-    const { updateNode, node } = this.props
-    const { tags } = node
-    updateNode({
-      id: node.id,
-      payload: {
-        tags: tags.filter((tag, i) => i !== index)
-      }
-    })
-  }
-
-  handleActorUpdate = (event, index) => {
-    const { updateNode, node } = this.props
-    updateNode({
-      id: node.id,
-      payload: { actor: index }
-    })
   }
 
   handleTextUpdate = (event, name) => {
@@ -71,21 +35,16 @@ class EditTab extends Component {
   }
 
   render() {
-    const { node = {}, actors } = this.props
+    const { node = {}  } = this.props
     const {
       type = "",
       title = "",
-      actor = "",
       body = "",
       nextIntent = "",
       maxRetries = "0",
       errorMessage = "",
-      tags = [],
       conditions = ""
     } = node
-    const menuItems = actors.map((actor, i) => (
-      <MenuItem key={actor.name + i} value={i} primaryText={actor.name} />
-    ))
 
     return (
       <div style={styles.tabContent}>
@@ -100,6 +59,8 @@ class EditTab extends Component {
             fullWidth
           />
         )}
+        
+        {type !== "dialogue" && (
         <TextField
           label="conditions"
           id="conditions"
@@ -108,10 +69,12 @@ class EditTab extends Component {
           value={(node && conditions) || ""}
           onChange={e => this.handleTextUpdate(e, "conditions")}
         />
+        
+        )}
         <TextField
           label="body"
           id="body"
-          multiLine
+          multiline
           fullWidth
           style={styles.textStyle}
           value={node && body}
@@ -120,7 +83,7 @@ class EditTab extends Component {
         <TextField
           id="nextIntent"
           label="nextIntent"
-          multiLine
+          multiline
           fullWidth
           style={styles.textStyle}
           value={node && nextIntent}
@@ -129,7 +92,7 @@ class EditTab extends Component {
          <TextField
           id="maxRetries"
           label="maxRetries"
-          multiLine
+          multiline
           fullWidth
           style={styles.textStyle}
           value={node && maxRetries}
@@ -138,7 +101,7 @@ class EditTab extends Component {
         <TextField
           id="errorMessage"
           label="errorMessage"
-          multiLine
+          multiline
           fullWidth
           style={styles.textStyle}
           value={node && errorMessage}
@@ -151,9 +114,8 @@ class EditTab extends Component {
 
 const makeMapState = () => {
   const getNode = makeGetNodeByCurrent()
-  return ({ nodes, FocusedNode, actors }) => ({
+  return ({ nodes, FocusedNode }) => ({
     ...getNode({ nodes, FocusedNode }),
-    actors
   })
 }
 

@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import { Redirect } from "react-router-dom"
-import { List, ListItem, Icon, IconButton, Divider, Button } from "@material-ui/core"
+import { List, ListItem, ListItemText, Icon, IconButton, ListItemSecondaryAction,Button } from "@material-ui/core"
 import initialScene from "../store/initialScene"
 import { rnd } from "../lib/math"
 
@@ -22,7 +22,13 @@ const styles = {
   trash: {
     position: "absolute",
     right: "20vw"
-  }
+  },
+  input: {
+    display: 'none',
+  },
+  button: {
+    margin: 0,
+  },
 }
 
 export default class Landing extends Component {
@@ -49,26 +55,55 @@ export default class Landing extends Component {
     });
   }
 
+  uploadFile = () =>{
+    var files = document.getElementById('selectFiles').files;
+    console.log(files);
+    if (files.length <= 0) {
+      return false;
+    }
+    
+    var fr = new FileReader();
+    
+    let _this = this;
+    fr.onload = function(e) { 
+      var result = JSON.parse(e.target.result);
+      var formatted = JSON.stringify(result, null, 2);
+      console.log(formatted)
+
+      const id = rnd()
+      localStorage.setItem(id, formatted)
+      _this.setState({ redirect: id })
+    }
+    
+    fr.readAsText(files.item(0));
+  }
+
   renderScenes = () => {
     let existingScenes = []
     for (let i = 0; i < localStorage.length; i++) {
       const scene = JSON.parse(localStorage.getItem(localStorage.key(i))).scene
       existingScenes.push(
-        <ListItem
+        <ListItem button
           key={scene || `untitled${i}`}
-          primaryText={scene || "untitled scene"}
-          innerDivStyle={styles.option}
+          innerdivstyle={styles.option}
           onClick={() => this.setState({ redirect: localStorage.key(i) })}
-          rightIconButton={
+          righticonbutton={
             <IconButton
               style={styles.trash}
-              iconStyle={styles.icon}
+              iconstyle={styles.icon}
               onClick={() => this.deleteScene(localStorage.key(i))}
             >
               <Icon className="material-icons">delete</Icon>
             </IconButton>
           }
-        />
+        >
+          <ListItemText primary={scene || "untitled scene"} />
+          <ListItemSecondaryAction>
+            <IconButton aria-label="Delete" onClick={() => this.deleteScene(localStorage.key(i))}>
+              <Icon className="material-icons">delete</Icon>
+            </IconButton>
+          </ListItemSecondaryAction>
+        </ListItem>
       )
     }
     return existingScenes.sort((a, b) => a.key > b.key)
@@ -99,17 +134,16 @@ export default class Landing extends Component {
             this.state.remainingSpace
           }`}
         </div>
+        <input type="file" id="selectFiles"/><br />
+        <button id="import" onClick={this.uploadFile}>
+          Import</button>
+          
         <List>
-          <ListItem
-            primaryText="new"
-            innerDivStyle={styles.option}
-            onClick={this.newScene}
-          />
+        <ListItem button onClick={this.newScene}>
+          <ListItemText primary="New" />
+        </ListItem>
           {this.state.scenes}
-        </List>
-        <Divider />
-        <h1>Upload .bonsai file</h1>
-        
+        </List>        
       </div>
     )
   }

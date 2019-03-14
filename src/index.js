@@ -1,34 +1,32 @@
 import React, { Fragment } from "react"
 import ReactDOM from "react-dom"
 import { BrowserRouter as Router, Route } from "react-router-dom"
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles/"
+import { MuiThemeProvider } from "@material-ui/core/styles/"
 import registerServiceWorker from "./registerServiceWorker"
 import Landing from "./landing/Landing"
 import Scene from "./app/Scene"
 import "./index.css"
 
-const muiTheme = createMuiTheme({
+
+
+import { createMuiTheme } from '@material-ui/core/styles';
+import purple from '@material-ui/core/colors/purple';
+
+const theme = createMuiTheme({
+  typography: {
+    useNextVariants: true,
+  },
   palette: {
-    primary: {
-      main : "#43a047"
-    },
+    primary: purple,
     secondary: {
-      main: "#558b2f"
+      main: '#f44336',
     },
-    textStyle: {
-      fontFamily: "Roboto Mono",
-      fontSize: 12,
-      color:"#ff0000"
-    },
-    tabContent: {
-      margin: "20px"
-    }
-  }
-})
+  },
+});
 
 ReactDOM.render(
   <Router>
-    <MuiThemeProvider muiTheme={muiTheme}>
+    <MuiThemeProvider theme={theme}>
       <Fragment>
         <Route exact path="/" component={Landing} />
         <Route path="/scene/:id" component={Scene} />

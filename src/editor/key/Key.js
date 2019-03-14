@@ -106,7 +106,7 @@ class KeyTab extends Component {
             <TextField
               name="key"
               fullWidth
-              textareaStyle={styles.textStyle}
+              textareastyle={styles.textStyle}
               floatingLabelFixed
               floatingLabelText={<span>Key</span>}
               value={newKey}
@@ -115,7 +115,7 @@ class KeyTab extends Component {
             <TextField
               name="default"
               fullWidth
-              textareaStyle={styles.textStyle}
+              textareastyle={styles.textStyle}
               floatingLabelFixed
               floatingLabelText={<span>Default</span>}
               value={newDefault}
@@ -144,7 +144,7 @@ class KeyTab extends Component {
                 <TableCell>
                   <IconButton
                     style={styles.button}
-                    iconStyle={styles.icon}
+                    iconstyle={styles.icon}
                     onClick={() => this.props.deleteKey(i)}
                   >
                     {deleteIcon}

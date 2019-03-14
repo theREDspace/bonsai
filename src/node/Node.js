@@ -1,8 +1,9 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
-import { Card, Typography } from "@material-ui/core"
+import { Card, Typography, Icon } from "@material-ui/core"
 import NodeHeader from "./fragments/NodeHeader"
 import NodeFooter from "./fragments/NodeFooter"
+import { setFocusedNode } from "./NodeActions";
 
 const styles = {
   body: {
@@ -23,10 +24,7 @@ class Node extends Component {
     id: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
     title: PropTypes.string,
-    tags: PropTypes.arrayOf(PropTypes.string),
     body: PropTypes.string,
-    color: PropTypes.string,
-    actor: PropTypes.string,
     prev: PropTypes.array,
     next: PropTypes.array,
     pos: PropTypes.array,
@@ -38,8 +36,6 @@ class Node extends Component {
   }
   static defaultProps = {
     title: "",
-    tags: [],
-    actor: "",
     color: "FFFFFF",
     body: "",
     current: false
@@ -72,17 +68,12 @@ class Node extends Component {
       id,
       type,
       title,
-      tags,
       body,
       color,
-      actor,
       bounds,
-      current,
       setFocusedLink,
       deleteAllLinks,
       deleteNode
-      // prev,
-      // next
     } = this.props
     const { widthAdjustment } = this.state
     return (
@@ -99,7 +90,35 @@ class Node extends Component {
             color
           }}
         />
-        <Typography style={styles.body} expandable>
+        <div className="inNode" style={{position:"absolute",left:-20, width:25, height:25}}>
+          <Icon className="material-icons">keyboard_arrow_left</Icon>
+        </div>
+        <div className="outNode" style={{position:"absolute",left:205, width:25, height:25}} 
+        onClick={() => {
+            console.log("node id: " + id)
+            setFocusedNode({id:id})
+            setFocusedLink({
+              status: true,
+              from: id,
+              outIndex:0
+            })
+          }
+          }
+        ><Icon className="material-icons">keyboard_arrow_right</Icon></div>
+        {type !== "Node" && (
+        <div className="outNode" style={{position:"absolute",left:205,top:75, width:25, height:25}} 
+        onClick={() =>{
+          console.log("node id: " + id)
+          setFocusedNode({id:id})
+            setFocusedLink({
+              status: true,
+              from: id,
+              outIndex:1
+            })
+        }
+          }
+        ><Icon className="material-icons">keyboard_arrow_right</Icon></div>)}
+        <Typography style={styles.body}>
           {body}
         </Typography>
         <NodeFooter
@@ -108,10 +127,7 @@ class Node extends Component {
             isFocusedNode: this.isFocusedNode,
             setFocusedLink,
             deleteAllLinks,
-            deleteNode,
-            collapse: () => {
-              this.setState({ collapsed: !this.state.collapsed })
-            }
+            deleteNode
           }}
         />
       </Card>
