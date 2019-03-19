@@ -1,35 +1,24 @@
-import classNames from 'classnames';
-import React, { Component, Fragment } from "react"
-import { connect } from "react-redux"
-import { Redirect } from "react-router-dom"
-import PropTypes from "prop-types"
-import {
-  Toolbar,
-  TextField,
-  Fab,
-  Icon,
-  IconButton
-} from "@material-ui/core"
-import { rnd } from "../lib/math"
-import { gridSize } from "../lib/view"
+import classNames from "classnames";
+import React, { Component, Fragment } from "react";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
+import PropTypes from "prop-types";
+import { Toolbar, TextField, Fab, Icon, IconButton } from "@material-ui/core";
+import { rnd } from "../lib/math";
+import { gridSize } from "../lib/view";
 import {
   toggleEditor,
   setFocusedNode,
   newNode,
   updateScene
-} from "../store/actions"
-import { saveState } from "../store/localStorage"
-import { exportState } from "../store/export"
-import { focusedStore } from "../app/Scene"
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormLabel from '@material-ui/core/FormLabel';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import Switch from '@material-ui/core/Switch';
-import { capitalize } from '@material-ui/core/utils/helpers';
-import SpeedDial from '@material-ui/lab/SpeedDial';
-import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
-import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
+} from "../store/actions";
+import { saveState } from "../store/localStorage";
+import { exportState } from "../store/export";
+import { focusedStore } from "../app/Scene";
+import { capitalize } from "@material-ui/core/utils/helpers";
+import SpeedDial from "@material-ui/lab/SpeedDial";
+import SpeedDialIcon from "@material-ui/lab/SpeedDialIcon";
+import SpeedDialAction from "@material-ui/lab/SpeedDialAction";
 
 const download = require("downloadjs");
 
@@ -77,36 +66,36 @@ const styles = {
     color: "#558b2f"
   },
   controls: {
-    margin: 8 * 3,
+    margin: 8 * 3
   },
   exampleWrapper: {
-    position: 'relative',
-    height: 380,
+    position: "relative",
+    height: 380
   },
   radioGroup: {
-    margin: `${8}px 0`,
+    margin: `${8}px 0`
   },
   speedDial: {
-    position: 'absolute',
-    '&$directionUp, &$directionLeft': {
+    position: "absolute",
+    "&$directionUp, &$directionLeft": {
       bottom: 8 * 2,
-      right: 8 * 3,
+      right: 8 * 3
     },
-    '&$directionDown, &$directionRight': {
+    "&$directionDown, &$directionRight": {
       top: 8 * 2,
-      left: 8 * 3,
-    },
+      left: 8 * 3
+    }
   },
   directionUp: {},
   directionRight: {},
   directionDown: {},
-  directionLeft: {},
-}
+  directionLeft: {}
+};
 
 const actions = [
-  { icon: <Icon>chat</Icon>, name: 'Node' },
-  { icon: <Icon>question_answer</Icon>, name: 'MCQ' },
-  { icon: <Icon>scatter_plot</Icon>, name: 'Branch' },
+  { icon: <Icon>chat</Icon>, name: "Node" },
+  { icon: <Icon>question_answer</Icon>, name: "MCQ" },
+  { icon: <Icon>scatter_plot</Icon>, name: "Branch" }
 ];
 
 class Nav extends Component {
@@ -117,35 +106,39 @@ class Nav extends Component {
     newNode: PropTypes.func.isRequired,
     editor: PropTypes.bool.isRequired,
     scene: PropTypes.string.isRequired
-  }
+  };
 
   state = {
     redirect: "",
     fileOpen: false,
-    direction: 'up',
+    direction: "up",
     open: false,
-    hidden: false,
-  }
+    hidden: false
+  };
 
   handleZoomSlider = (e, v) => {
-    this.setState({ scale: v })
-  }
+    this.setState({ scale: v });
+  };
 
-  handleJSONDown = () =>{
-    download(exportState(focusedStore.getState()), "file.json", "text/plain")
-  }
+  handleJSONDown = () => {
+    download(exportState(focusedStore.getState()), "file.json", "text/plain");
+  };
 
-  handleProjectDown = () =>{
-    download(JSON.stringify(focusedStore.getState()), "file.bonsai", "text/plain")
-  }
+  handleProjectDown = () => {
+    download(
+      JSON.stringify(focusedStore.getState()),
+      "file.bonsai",
+      "text/plain"
+    );
+  };
 
   handleClick = actionName => {
     this.setState(state => ({
-      open: !state.open,
+      open: !state.open
     }));
 
-    console.log(actionName)
-    this.handleNewNode(actionName)
+    console.log(actionName);
+    this.handleNewNode(actionName);
   };
 
   handleClose = () => {
@@ -157,13 +150,11 @@ class Nav extends Component {
   };
 
   handleNewNode = type => {
-    console.log(type)
-    const { newNode, setFocusedNode, scale } = this.props
-    const newId = rnd()
+    console.log(type);
+    const { newNode, setFocusedNode, scale } = this.props;
+    const newId = rnd();
     const diffs =
-      type === "Node"
-        ? { body: "new dialogue" }
-        : { body: "new choice" }
+      type === "Node" ? { body: "new dialogue" } : { body: "new choice" };
     const newPos = [
       Math.round(
         (window.pageXOffset + window.innerWidth / 2 - 100) / gridSize
@@ -175,7 +166,7 @@ class Nav extends Component {
       ) *
         gridSize *
         scale
-    ]
+    ];
     newNode({
       id: newId,
       payload: {
@@ -188,27 +179,27 @@ class Nav extends Component {
         bounds: [210],
         ...diffs
       }
-    })
-    setFocusedNode({ id: newId })
-  }
+    });
+    setFocusedNode({ id: newId });
+  };
 
   handleSceneUpdate = e => {
-    this.props.updateScene({ scene: e.target.value })
-  }
+    this.props.updateScene({ scene: e.target.value });
+  };
 
   handleRequestClose = () => {
     this.setState({
       fileOpen: false
-    })
-  }
+    });
+  };
 
   render() {
-    const { scene } = this.props
+    const { scene } = this.props;
     const hideEditor = {
       transform: !this.props.editor ? "translateX(28vw)" : "translateX(0)"
-    }
+    };
     if (this.state.redirect) {
-      return <Redirect to={this.state.redirect} />
+      return <Redirect to={this.state.redirect} />;
     }
 
     const { classes } = this.props;
@@ -216,34 +207,33 @@ class Nav extends Component {
 
     const speedDialClassName = classNames(
       styles.speedDial,
-      styles[`direction${capitalize(direction)}`],
+      styles[`direction${capitalize(direction)}`]
     );
 
     return (
       <Fragment>
         <Toolbar style={styles.container}>
-            <IconButton
-              tooltip="Home"
-              onClick={() => {
-                saveState(focusedStore.getState())
-                this.setState({ redirect: "/" })
-              }}
-            >
-              <Icon className="material-icons">home</Icon>
-            </IconButton>
-            <TextField
-              name="scene"
-              fullWidth
-              style={styles.textField}
-              textareastyle={styles.textStyle}
-              hinttext="Scene"
-              onChange={this.handleSceneUpdate}
-              value={scene}
-            />
-          
+          <IconButton
+            tooltip="Home"
+            onClick={() => {
+              saveState(focusedStore.getState());
+              this.setState({ redirect: "/" });
+            }}
+          >
+            <Icon className="material-icons">home</Icon>
+          </IconButton>
+          <TextField
+            name="scene"
+            fullWidth
+            style={styles.textField}
+            textareastyle={styles.textStyle}
+            hinttext="Scene"
+            onChange={this.handleSceneUpdate}
+            value={scene}
+          />
         </Toolbar>
         <div style={{ ...styles.saveButtonContainer, ...hideEditor }}>
-        <Fab
+          <Fab
             onClick={() => this.handleJSONDown()}
             style={styles.button}
             data-tip={"Export JSON"}
@@ -279,13 +269,15 @@ class Nav extends Component {
                 key={action.name}
                 icon={action.icon}
                 tooltipTitle={action.name}
-                onClick={()=>{this.handleClick(action.name)}}
+                onClick={() => {
+                  this.handleClick(action.name);
+                }}
               />
             ))}
           </SpeedDial>
         </div>
       </Fragment>
-    )
+    );
   }
 }
 
@@ -293,11 +285,14 @@ const mapState = ({ scale, editor, scene }) => ({
   scale,
   editor,
   scene
-})
+});
 
-export default connect(mapState, {
-  toggleEditor,
-  newNode,
-  setFocusedNode,
-  updateScene
-})(Nav)
+export default connect(
+  mapState,
+  {
+    toggleEditor,
+    newNode,
+    setFocusedNode,
+    updateScene
+  }
+)(Nav);
