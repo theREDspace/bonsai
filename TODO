@@ -1,26 +1,20 @@
-MVP 
+TODO
 ==========================
 
-- Reset IsEntry
 - Chapters
 - Paywall
-- API call node (handle stashing and processing) 
-    - Analytics 
-- DB lookup node
+- API call node (handle stashing and processing)
+    - Analytics
+- DB/CRUD node
 - Script node
 - SSML node for settings (investigate standard)
-- Index  - Global vars (settings and other stuff)
 - Connector node
 - handle local notifications
-- Audio player
-
-
-Phase 2
-==========================
-
 - Card images/text
 - APL stuff ? (alexa)
-- Video 
-- Auto Complete vars
-- alexa buttons 
-- Investigate how to properly handle different intent
+- Video
+- Audio player (for remote /local content)
+- Investigate how to properly handle different intents
+- Localization
+- Building intent models
+- Pretty UI
