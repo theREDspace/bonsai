@@ -19,6 +19,10 @@ import { capitalize } from "@material-ui/core/utils/helpers";
 import SpeedDial from "@material-ui/lab/SpeedDial";
 import SpeedDialIcon from "@material-ui/lab/SpeedDialIcon";
 import SpeedDialAction from "@material-ui/lab/SpeedDialAction";
+import Drawer from '@material-ui/core/Drawer';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 
 const download = require("downloadjs");
 
@@ -89,7 +93,13 @@ const styles = {
   directionUp: {},
   directionRight: {},
   directionDown: {},
-  directionLeft: {}
+  directionLeft: {},
+  list: {
+    width: 200,
+  },
+  rows:{
+    display: 'inline'
+ }
 };
 
 const actions = [
@@ -113,7 +123,9 @@ class Nav extends Component {
     fileOpen: false,
     direction: "up",
     open: false,
-    hidden: false
+    hidden: false,
+    left: false,
+    pages:{}
   };
 
   handleZoomSlider = (e, v) => {
@@ -193,6 +205,12 @@ class Nav extends Component {
     });
   };
 
+  toggleDrawer = (side, open) => () => {
+    this.setState({
+      [side]: open,
+    });
+  }
+
   render() {
     const { scene } = this.props;
     const hideEditor = {
@@ -210,9 +228,57 @@ class Nav extends Component {
       styles[`direction${capitalize(direction)}`]
     );
 
+    const sideList = (
+      <div style={styles.list}>
+        <div style={styles.rows}>
+          <div style={styles.rows}>Add Chapter</div>
+          <IconButton
+            style={styles.rows}
+            tooltip="Add Chapter"
+            onClick={() => {
+              saveState(focusedStore.getState());
+
+              let len = Object.keys(this.state.pages).length;
+
+              if(len == null) len = 0;
+              
+              this.setState(prevState => ({
+              pages: {
+                  ...prevState.pages,
+                  [len]:"test" + len
+              },
+          }));
+              console.log(this.state.pages)
+            }}
+          >
+            <Icon className="material-icons">add_circle_outline</Icon>
+          </IconButton>
+        </div>
+        <List>
+          {
+            Object.keys(this.state.pages).map((key, index) => (
+              <ListItem button key={this.state.pages[key]}>
+                <ListItemText primary={this.state.pages[key]} />
+              </ListItem>
+            ))
+          }
+        </List>
+      </div>
+    );
+
     return (
       <Fragment>
         <Toolbar style={styles.container}>
+          <IconButton
+            tooltip="Chapters"
+            onClick={() => {
+              saveState(focusedStore.getState());
+              this.setState({ left: true });
+            }}
+          >
+            <Icon className="material-icons">class</Icon>
+          </IconButton>
+
           <IconButton
             tooltip="Home"
             onClick={() => {
@@ -222,6 +288,7 @@ class Nav extends Component {
           >
             <Icon className="material-icons">home</Icon>
           </IconButton>
+
           <TextField
             name="scene"
             fullWidth
@@ -232,6 +299,9 @@ class Nav extends Component {
             value={scene}
           />
         </Toolbar>
+        <Drawer open={this.state.left} onClose={this.toggleDrawer('left', false)}>
+            {sideList}
+        </Drawer>
         <div style={{ ...styles.saveButtonContainer, ...hideEditor }}>
           <Fab
             onClick={() => this.handleJSONDown()}
