@@ -6,21 +6,10 @@
 2.  `npm install` dependencies
 3.  `npm start` to load react app.
 
-### To do
-* [ ] Chapters
-* [ ] Paywall
-* [ ] API call node (handle stashing and processing)
-* [ ] Analytics
-* [ ] DB/CRUD node
-* [ ] Script node
-* [ ] SSML node for settings (investigate standard)
-* [ ] Connector node
-* [ ] handle local notifications
-* [ ] Card images/text
-* [ ] APL stuff ? (alexa)
-* [ ] Video
-* [ ] Audio player (for remote /local content)
-* [ ] Investigate how to properly handle different intents
-* [ ] Localization
-* [ ] Building intent models
-* [ ] Pretty UI
+### Kanban
+
+https://jira.redspace.com/secure/RapidBoard.jspa?rapidView=899
+
+### Contributing
+
+Grab a task from the Kanban board, make a feature branch with the ticket number in the name (ex:  feature/BON-15_json_format) and create a PR when ready.
