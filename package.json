@@ -1,6 +1,7 @@
 {
-  "name": "dtree",
+  "name": "bonsai",
   "version": "0.1.0",
+  "author": "theREDspace",
   "private": true,
   "dependencies": {
     "@babel/core": "7.4.3",
