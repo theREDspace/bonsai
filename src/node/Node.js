@@ -1,8 +1,9 @@
-import React, { Component } from "react"
-import PropTypes from "prop-types"
-import { Card, CardText, Chip } from "material-ui"
-import NodeHeader from "./fragments/NodeHeader"
-import NodeFooter from "./fragments/NodeFooter"
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { Card, Typography, Icon } from "@material-ui/core";
+import NodeHeader from "./fragments/NodeHeader";
+import NodeFooter from "./fragments/NodeFooter";
+import { setFocusedNode } from "./NodeActions";
 
 const styles = {
   body: {
@@ -12,25 +13,10 @@ const styles = {
     margin: "5px 0px 0px",
     fontSize: 11
   },
-  tagWrapper: {
-    display: "flex",
-    flexWrap: "wrap"
-  },
-  tagChip: {
-    height: 20,
-    margin: "2px 2px 5px",
-    borderRadius: 8,
-    padding: "0 8px"
-  },
-  tag: {
-    fontSize: 11,
-    lineHeight: "20px",
-    padding: 0
-  },
   divider: {
     margin: "5px 0px"
   }
-}
+};
 
 class Node extends Component {
   static propTypes = {
@@ -38,10 +24,7 @@ class Node extends Component {
     id: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
     title: PropTypes.string,
-    tags: PropTypes.arrayOf(PropTypes.string),
     body: PropTypes.string,
-    color: PropTypes.string,
-    actor: PropTypes.string,
     prev: PropTypes.array,
     next: PropTypes.array,
     pos: PropTypes.array,
@@ -50,66 +33,51 @@ class Node extends Component {
     setFocusedLink: PropTypes.func.isRequired,
     deleteAllLinks: PropTypes.func.isRequired,
     deleteNode: PropTypes.func.isRequired
-  }
+  };
   static defaultProps = {
     title: "",
-    tags: [],
-    actor: "",
     color: "FFFFFF",
     body: "",
     current: false
-  }
+  };
   state = {
     expanded: true,
     collapsed: false,
     widthAdjustment: 0
-  }
+  };
 
   handleExpandChange = expanded => {
-    this.setState({ expanded })
-  }
+    this.setState({ expanded });
+  };
 
   adjustWidth = (event, data) => {
-    this.setState({ widthAdjustment: data.x })
-  }
+    this.setState({ widthAdjustment: data.x });
+  };
 
   updateWidth = () => {
-    const { bounds, updateNode, id } = this.props
+    const { bounds, updateNode, id } = this.props;
     updateNode({
       id,
       payload: { bounds: [bounds[0] + this.state.widthAdjustment] }
-    })
-    this.setState({ widthAdjustment: 0 })
-  }
+    });
+    this.setState({ widthAdjustment: 0 });
+  };
 
   render() {
     const {
       id,
       type,
       title,
-      tags,
       body,
       color,
-      actor,
       bounds,
-      current,
       setFocusedLink,
       deleteAllLinks,
       deleteNode
-      // prev,
-      // next
-    } = this.props
-    const { widthAdjustment } = this.state
-    const chipTags = tags.map(tag => (
-      <Chip key={tag} style={styles.tagChip} labelStyle={styles.tag}>
-        {tag}
-      </Chip>
-    ))
+    } = this.props;
+    const { widthAdjustment } = this.state;
     return (
       <Card
-        initiallyExpanded
-        expanded={this.state.expanded}
-        onExpandChange={this.handleExpandChange}
         style={{
           width: `calc(${bounds[0]}px + ${widthAdjustment}px)`
         }}
@@ -119,35 +87,66 @@ class Node extends Component {
             type,
             title,
             body,
-            color,
-            actor,
-            expanded: this.state.expanded,
-            expand: this.handleExpandChange
+            color
           }}
         />
-        <CardText style={styles.body} expandable>
-          {tags && <div style={styles.tagWrapper}>{chipTags}</div>}
-          {body}
-        </CardText>
+        <div
+          className="inNode"
+          style={{ position: "absolute", left: -20, width: 25, height: 25 }}
+        >
+          <Icon className="material-icons">keyboard_arrow_left</Icon>
+        </div>
+        <div
+          className="outNode"
+          style={{ position: "absolute", left: 205, width: 25, height: 25 }}
+          onClick={() => {
+            console.log("node id: " + id);
+            setFocusedNode({ id: id });
+            setFocusedLink({
+              status: true,
+              from: id,
+              outIndex: 0
+            });
+          }}
+        >
+          <Icon className="material-icons">keyboard_arrow_right</Icon>
+        </div>
+        {type !== "Node" && (
+          <div
+            className="outNode"
+            style={{
+              position: "absolute",
+              left: 205,
+              top: 75,
+              width: 25,
+              height: 25
+            }}
+            onClick={() => {
+              console.log("node id: " + id);
+              setFocusedNode({ id: id });
+              setFocusedLink({
+                status: true,
+                from: id,
+                outIndex: 1
+              });
+            }}
+          >
+            <Icon className="material-icons">keyboard_arrow_right</Icon>
+          </div>
+        )}
+        <Typography style={styles.body}>{body}</Typography>
         <NodeFooter
           {...{
             id,
-            current,
-            expanded: this.state.expanded,
             isFocusedNode: this.isFocusedNode,
-            adjustWidth: this.adjustWidth,
-            updateWidth: this.updateWidth,
             setFocusedLink,
             deleteAllLinks,
-            deleteNode,
-            collapse: () => {
-              this.setState({ collapsed: !this.state.collapsed })
-            }
+            deleteNode
           }}
         />
       </Card>
-    )
+    );
   }
 }
 
-export default Node
+export default Node;

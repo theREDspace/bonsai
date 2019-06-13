@@ -50,26 +50,6 @@ class Tree extends Component {
   state = {
     mouseEvent: {}
   }
-  // isNegative = n => {
-  //   return ((n = +n) || 1 / n) < 0
-  // }
-
-  // handleZoom = e => {
-  //   if (!e.shiftKey) {
-  //     return
-  //   }
-  //   e.preventDefault()
-  //   const direction =
-  //     this.isNegative(e.deltaX) && this.isNegative(e.deltaY) ? "down" : "up"
-  //   if (direction === "up") {
-  //     this.setState({ scale: this.state.scale + zoomStep })
-  //   } else {
-  //     this.setState({ scale: this.state.scale - zoomStep })
-  //   }
-  //   if (this.state.scale < 0.3) {
-  //     this.setState({ scale: 0.3 })
-  //   }
-  // }
 
   handleMouse = e => {
     this.setState({ mouseEvent: { pageX: e.pageX, pageY: e.pageY } })

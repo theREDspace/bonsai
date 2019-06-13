@@ -1,7 +1,6 @@
 import { combineReducers } from "redux"
 
 import { nodes, FocusedNode } from "../node/NodeReducers"
-import { actors, colors } from "../editor/actor/ActorReducers"
 import { editor } from "../editor/edit/EditReducers"
 import { links, FocusedLink } from "../link/LinkReducers"
 import keys from "../editor/key/KeyReducers"
@@ -35,9 +34,7 @@ export default combineReducers({
   links,
   FocusedNode,
   FocusedLink,
-  actors,
   keys,
-  colors,
   scale,
   editor,
   warning

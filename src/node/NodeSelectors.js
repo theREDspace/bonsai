@@ -4,16 +4,13 @@ const getNodeById = ({ nodes }, { id }) => nodes[id]
 const getId = (_, { id }) => id
 const getFocusedNode = ({ FocusedNode }) => FocusedNode
 const getNodes = ({ nodes }) => nodes
-const getActors = ({ actors }) => actors
 const getLinks = ({ links }) => links
 
 export const makeGetNode = () =>
   createSelector(
-    [getNodeById, getActors, getFocusedNode],
-    (node, actors, FocusedNode) => ({
+    [getNodeById, getFocusedNode],
+    (node, FocusedNode) => ({
       ...node,
-      actor: node.actor !== undefined ? actors[node.actor].name : "",
-      color: node.actor !== undefined ? actors[node.actor].color : "#FFF",
       current: FocusedNode === node.id
     })
   )
