@@ -1,41 +1,37 @@
 export const exportState = state => {
     try {
-        return gameJSON(state);
+        var gjson = gameJSON(state);
+        console.log(gjson);
+        return gjson;
     } catch (err) {
       return null
     }
   }
   
   export function gameJSON(state) {
-    let stateJSON = {};
-    console.log(state)
-    for (let nodeId in state.nodes) {
-        let node = state.nodes[nodeId] 
-        stateJSON[node.id] = 
+    var stateJSON = {};
+
+    for (var nodeId in state.nodes) {
+        var node = state.nodes[nodeId] 
+        stateJSON[node.title] = 
         {
           "id" : node.id,
-          "title" : node.title,
           "type": node.type,
           "name" : node.body,
           "intentName" : node.nextIntent
         }
 
-        if(node.maxRetries > 0)
-        {
-          stateJSON[node.id]["retryValue"] = node.maxRetries
-          stateJSON[node.id]["retryMessage"] = node.errorMessage
+        if(node.maxRetries > 0){
+          // eslint-disable-next-line no-unused-expressions
+          stateJSON[node.title]["retryValue"] = node.maxRetries,
+          stateJSON[node.title]["retryMessage"] = node.errorMessage
         }
 
-        let linkArr = [];
-        for(let i=0;i < state.links.length;i++)
-        {
-          if(state.links[i][0] === node.id)
-          {
-            linkArr.push(state.links[i][1])
+        for(var i=0;i < state.links.length;i++){
+          if(state.links[i][0] == node.id){
+            stateJSON[node.title]["next"] = state.links[i][1]
           }
-        } 
-        
-        stateJSON[node.id]["next"] = linkArr
+        }    
     }
 
     return JSON.stringify(stateJSON);
