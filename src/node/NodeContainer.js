@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import Node from "./Node"
-import { makeGetNode, makeConnectedNodes } from "../store/selectors"
+// import { makeGetNode, makeConnectedNodes } from "../store/selectors"
 import {
   updateNode,
   setFocusedLink,
@@ -25,17 +25,17 @@ class NodeContainer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.FocusedLink.status !== this.props.FocusedLink.status) {
-      const { id, updateNode, node } = this.props
-      if (nextProps.node.id === nextProps.FocusedLink.from) {
-        nextProps.node.next.forEach(n => {
-          updateNode({ id: n, payload: { linkable: false } })
-        })
-      }
-      if (node.linkable === false) {
-        updateNode({ id, payload: { linkable: true } })
-      }
-    }
+    // if (nextProps.FocusedLink.status !== this.props.FocusedLink.status) {
+    //   const { id, updateNode, node } = this.props
+    //   if (nextProps.node.id === nextProps.FocusedLink.from) {
+    //     nextProps.node.next.forEach(n => {
+    //       updateNode({ id: n, payload: { linkable: false } })
+    //     })
+    //   }
+    //   if (node.linkable === false) {
+    //     updateNode({ id, payload: { linkable: true } })
+    //   }
+    // }
   }
 
   render() {
@@ -60,19 +60,23 @@ class NodeContainer extends Component {
   }
 }
 
-const makeMapState = () => {
-  const getNode = makeGetNode()
-  const getConnected = makeConnectedNodes()
-  return ({ nodes, FocusedNode, FocusedLink, links }, { id }) => ({
-    node: {
-      ...getNode({ nodes, FocusedNode }, { id }),
-      ...getConnected({ links }, { id })
-    },
-    FocusedLink
-  })
+// const makeMapState = () => {
+//   const getNode = makeGetNode()
+//   const getConnected = makeConnectedNodes()
+//   return ({ nodes, focusedNode, FocusedLink, links }, { id }) => ({
+//     node: {
+//       ...getNode({ nodes, focusedNode }, { id }),
+//       ...getConnected({ links }, { id })
+//     },
+//     FocusedLink
+//   })
+// }
+
+function mapState({ pages, focusedPage }) {
+  return { node: { ...pages[focusedPage].nodes[pages[focusedPage].focusedNode] } };
 }
 
-export default connect(makeMapState, {
+export default connect(mapState, {
   updateNode,
   deleteNode,
   setFocusedLink,

@@ -84,17 +84,17 @@ class NodeList extends Component {
           handle=".draggable"
           grid={[gridSize, gridSize]}
           onMouseDown={() => {
-            if (n.linkable) {
-              if (FocusedLink.status) {
-                newLink({
-                  from: FocusedLink.from,
-                  to: n.id,
-                  outIndex: FocusedLink.outIndex
-                })
-                return setFocusedLink({ status: false , outIndex:FocusedLink.outIndex})
-              }
-              if (FocusedNode !== n.id) setFocusedNode({ id: n.id })
-            }
+            // if (n.linkable) {
+            //   if (FocusedLink.status) {
+            //     newLink({
+            //       from: FocusedLink.from,
+            //       to: n.id,
+            //       outIndex: FocusedLink.outIndex
+            //     })
+            //     return setFocusedLink({ status: false , outIndex:FocusedLink.outIndex})
+            //   }
+            //   if (FocusedNode !== n.id) setFocusedNode({ id: n.id })
+            // }
           }}
           onDrag={(e, data) => this.handleNodePositionAdjust(e, data)}
           onStop={(e, data) => {
@@ -123,12 +123,16 @@ class NodeList extends Component {
   }
 }
 
-const mapState = ({ scale, nodes, FocusedLink, FocusedNode }) => ({
-  scale,
-  nodes,
-  FocusedLink,
-  FocusedNode
-})
+// const mapState = ({ scale, nodes, FocusedLink, FocusedNode }) => ({
+//   scale,
+//   nodes,
+//   FocusedLink,
+//   FocusedNode
+// })
+
+function mapState({ scale, pages, focusedPage }) {
+  return { scale, ...pages[focusedPage] };
+}
 
 export default connect(mapState, {
   setFocusedNode,

@@ -79,11 +79,11 @@ class Tree extends Component {
                 scale}px, transparent ${1 / scale}px)`
             }}
             onClick={() => {
-              if (FocusedLink.status) return setFocusedLink({ status: false })
+              // if (FocusedLink.status) return setFocusedLink({ status: false })
             }}
           >
             <NodeList />
-            <LinkContainer mouseEvent={this.state.mouseEvent} />
+            {/* <LinkContainer mouseEvent={this.state.mouseEvent} /> */}
           </div>
         </div>
       </div>
@@ -91,11 +91,18 @@ class Tree extends Component {
   }
 }
 
-const mapState = ({ scale, nodes, FocusedLink }) => ({
-  scale,
-  FocusedLink,
-  nodes
-})
+// const mapState = ({ scale, nodes, FocusedLink }) => ({
+//   scale,
+//   FocusedLink,
+//   nodes
+// })
+
+function mapState({ scale, pages, focusedPage }) {
+  return {
+    scale,
+    ...pages[focusedPage]
+  };
+}
 
 export default connect(mapState, {
   newNode,

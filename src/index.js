@@ -4,13 +4,10 @@ import { BrowserRouter as Router, Route } from "react-router-dom"
 import { MuiThemeProvider } from "@material-ui/core/styles/"
 import registerServiceWorker from "./registerServiceWorker"
 import Landing from "./landing/Landing"
-import Scene from "./app/Scene"
-import "./index.css"
-
-
-
+import Scene from "./app/Scene";
 import { createMuiTheme } from '@material-ui/core/styles';
 import purple from '@material-ui/core/colors/purple';
+import "./index.css";
 
 const theme = createMuiTheme({
   typography: {

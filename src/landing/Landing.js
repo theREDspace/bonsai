@@ -8,8 +8,8 @@ import {
   IconButton,
   ListItemSecondaryAction
 } from "@material-ui/core";
-import initialScene from "../store/initialScene";
-import { rnd } from "../lib/math";
+import { uuid } from "../lib/math";
+import { createNewScene } from "../config/Config";
 
 const styles = {
   name: {
@@ -46,8 +46,8 @@ export default class Landing extends Component {
     redirect: ""
   };
   newScene = () => {
-    const id = rnd();
-    localStorage.setItem(id, JSON.stringify(initialScene(id)));
+    const id = uuid();
+    localStorage.setItem(id, JSON.stringify(createNewScene(id)));
     this.setState({ redirect: id });
   };
 
@@ -77,7 +77,7 @@ export default class Landing extends Component {
       var formatted = JSON.stringify(result, null, 2);
       console.log(formatted);
 
-      const id = rnd();
+      const id = uuid();
       localStorage.setItem(id, formatted);
       _this.setState({ redirect: id });
     };
@@ -88,11 +88,11 @@ export default class Landing extends Component {
   renderScenes = () => {
     let existingScenes = [];
     for (let i = 0; i < localStorage.length; i++) {
-      const scene = JSON.parse(localStorage.getItem(localStorage.key(i))).scene;
+      const sceneTitle = JSON.parse(localStorage.getItem(localStorage.key(i))).title;
       existingScenes.push(
         <ListItem
           button
-          key={scene || `untitled${i}`}
+          key={sceneTitle || `untitled${i}`}
           innerdivstyle={styles.option}
           onClick={() => this.setState({ redirect: localStorage.key(i) })}
           righticonbutton={
@@ -105,7 +105,7 @@ export default class Landing extends Component {
             </IconButton>
           }
         >
-          <ListItemText primary={scene || "untitled scene"} />
+          <ListItemText primary={sceneTitle || "untitled scene"} />
           <ListItemSecondaryAction>
             <IconButton
               aria-label="Delete"

@@ -12,6 +12,7 @@ import EditTab from "../editor/edit/Edit"
 import HelpTab from "../editor/help/Help"
 import KeyTab from "../editor/key/Key"
 import { toggleEditor } from "../store/actions"
+import SceneExplorer from "../editor/sceneExplorer/SceneExplorer";
 
 const menuIcon = <Icon className="material-icons">menu</Icon>
 const editIcon = <Icon className="material-icons">mode_edit</Icon>
@@ -80,7 +81,8 @@ class Editor extends Component {
       <div key={3} style={styles.tabContent}>
         <h1>Settings...</h1>
         <p>eventually</p>
-      </div>
+      </div>,
+      <SceneExplorer />
     ]
 
     return (
@@ -88,6 +90,11 @@ class Editor extends Component {
         <div style={styles.container}>{tabs[this.state.editorTab]}</div>
         <div style={styles.tabs}>
           <BottomNavigation selectedindex={this.state.editorTab}>
+            <BottomNavigationAction
+              icon={settingsIcon}
+              onClick={() => this.select(4)}
+              data-tip={"Scene Explorer"}
+            />
             <BottomNavigationAction
               icon={editIcon}
               onClick={() => this.select(0)}

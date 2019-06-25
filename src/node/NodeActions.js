@@ -1,6 +1,7 @@
-export const updateNode = ({ id, payload }) => ({
+export const updateNode = ({ id, focusedPage, payload }) => ({
   type: "UPDATE_NODE",
   id,
+  focusedPage,
   payload
 })
 

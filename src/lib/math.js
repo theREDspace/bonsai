@@ -12,6 +12,13 @@ export function rnd() {
   return result
 }
 
+export function uuid() {
+  function s4() {
+    return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+  }
+  return `${s4()}${s4()}-${s4()}-${s4()}-${s4()}-${s4()}${s4()}${s4()}`;
+}
+
 export function determineEdge(start1, end1, start2, end2) {
   if (!start1 || !end1 || !start2 || !end2) {
     return {}

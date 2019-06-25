@@ -2,8 +2,7 @@ import React, { Component } from "react"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { TextField } from "@material-ui/core"
-import { makeGetNodeByCurrent } from "../../store/selectors"
-import { updateNode } from "../../store/actions"
+import { updateNode } from "../../store/actions";
 
 const styles = {
   textStyle: {
@@ -27,16 +26,11 @@ class EditTab extends Component {
   }
 
   handleTextUpdate = (event, name) => {
-    const { updateNode, node } = this.props
-    updateNode({
-      id: node.id,
-      payload: { [name]: event.target.value }
-    })
+    this.props.updateNode({ id: this.props.id, [name]: event.target.value });
   }
 
   render() {
-    const { node = {}  } = this.props
-    const {
+    const { 
       type = "",
       title = "",
       body = "",
@@ -44,7 +38,7 @@ class EditTab extends Component {
       maxRetries = "0",
       errorMessage = "",
       conditions = ""
-    } = node
+    } = this.props
 
     return (
       <div style={styles.tabContent}>
@@ -53,7 +47,7 @@ class EditTab extends Component {
             label="title"
             id="title"
             style={styles.textStyle}
-            value={node && title}
+            value={title}
             onChange={e => this.handleTextUpdate(e, "title")}
             margin="normal"
             fullWidth
@@ -66,7 +60,7 @@ class EditTab extends Component {
           id="conditions"
           style={styles.textStyle}
           fullWidth
-          value={(node && conditions) || ""}
+          value={conditions}
           onChange={e => this.handleTextUpdate(e, "conditions")}
         />
         
@@ -77,7 +71,7 @@ class EditTab extends Component {
           multiline
           fullWidth
           style={styles.textStyle}
-          value={node && body}
+          value={body}
           onChange={e => this.handleTextUpdate(e, "body")}
         />
         <TextField
@@ -86,7 +80,7 @@ class EditTab extends Component {
           multiline
           fullWidth
           style={styles.textStyle}
-          value={node && nextIntent}
+          value={nextIntent}
           onChange={e => this.handleTextUpdate(e, "nextIntent")}
         />
          <TextField
@@ -95,7 +89,7 @@ class EditTab extends Component {
           multiline
           fullWidth
           style={styles.textStyle}
-          value={node && maxRetries}
+          value={maxRetries}
           onChange={e => this.handleTextUpdate(e, "maxRetries")}
         />
         <TextField
@@ -104,7 +98,7 @@ class EditTab extends Component {
           multiline
           fullWidth
           style={styles.textStyle}
-          value={node && errorMessage}
+          value={errorMessage}
           onChange={e => this.handleTextUpdate(e, "errorMessage")}
         />
       </div>
@@ -112,11 +106,8 @@ class EditTab extends Component {
   }
 }
 
-const makeMapState = () => {
-  const getNode = makeGetNodeByCurrent()
-  return ({ nodes, FocusedNode }) => ({
-    ...getNode({ nodes, FocusedNode }),
-  })
+const mapFocusedNodeToProps = ({ pages }) => {
+  return { ...pages.map[pages.focusedPage].nodes[pages.map[pages.focusedPage].focusedNode] };
 }
 
-export default connect(makeMapState, { updateNode })(EditTab)
+export default connect(mapFocusedNodeToProps, { updateNode })(EditTab)

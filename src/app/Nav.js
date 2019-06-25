@@ -4,13 +4,14 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 import { Toolbar, TextField, Fab, Icon, IconButton } from "@material-ui/core";
-import { rnd } from "../lib/math";
+import { uuid } from "../lib/math";
 import { gridSize } from "../lib/view";
 import {
   toggleEditor,
   setFocusedNode,
   newNode,
-  updateScene
+  updateSceneTitle,
+  updatePage
 } from "../store/actions";
 import { saveState } from "../store/localStorage";
 import { exportState } from "../store/export";
@@ -101,11 +102,11 @@ const actions = [
 class Nav extends Component {
   static propTypes = {
     toggleEditor: PropTypes.func.isRequired,
-    updateScene: PropTypes.func.isRequired,
+    updateSceneTitle: PropTypes.func.isRequired,
     setFocusedNode: PropTypes.func.isRequired,
     newNode: PropTypes.func.isRequired,
     editor: PropTypes.bool.isRequired,
-    scene: PropTypes.string.isRequired
+    title: PropTypes.string.isRequired
   };
 
   state = {
@@ -152,7 +153,7 @@ class Nav extends Component {
   handleNewNode = type => {
     console.log(type);
     const { newNode, setFocusedNode, scale } = this.props;
-    const newId = rnd();
+    const newId = uuid();
     const diffs =
       type === "Node" ? { body: "new dialogue" } : { body: "new choice" };
     const newPos = [
@@ -183,8 +184,12 @@ class Nav extends Component {
     setFocusedNode({ id: newId });
   };
 
-  handleSceneUpdate = e => {
-    this.props.updateScene({ scene: e.target.value });
+  handleSceneTitleUpdate = e => {
+    this.props.updateSceneTitle({ title: e.target.value });
+  };
+
+  handlePageTitleUpdate = e => {
+    this.props.updatePage({ title: e.target.value });
   };
 
   handleRequestClose = () => {
@@ -194,7 +199,7 @@ class Nav extends Component {
   };
 
   render() {
-    const { scene } = this.props;
+    const { title, page } = this.props;
     const hideEditor = {
       transform: !this.props.editor ? "translateX(28vw)" : "translateX(0)"
     };
@@ -210,6 +215,8 @@ class Nav extends Component {
       styles[`direction${capitalize(direction)}`]
     );
 
+    console.log(page.title)
+
     return (
       <Fragment>
         <Toolbar style={styles.container}>
@@ -223,13 +230,24 @@ class Nav extends Component {
             <Icon className="material-icons">home</Icon>
           </IconButton>
           <TextField
-            name="scene"
+            name="sceneTitle"
             fullWidth
             style={styles.textField}
             textareastyle={styles.textStyle}
-            hinttext="Scene"
-            onChange={this.handleSceneUpdate}
-            value={scene}
+            hinttext="Scene Title"
+            onChange={this.handleSceneTitleUpdate}
+            value={title}
+            label="Scene Title"
+          />
+          <TextField
+            name="pageTitle"
+            fullWidth
+            style={styles.textField}
+            textareastyle={styles.textStyle}
+            hinttext="Page Title"
+            onChange={this.handlePageTitleUpdate}
+            value={page.title || ""}
+            label="Page Title"
           />
         </Toolbar>
         <div style={{ ...styles.saveButtonContainer, ...hideEditor }}>
@@ -281,10 +299,11 @@ class Nav extends Component {
   }
 }
 
-const mapState = ({ scale, editor, scene }) => ({
+const mapState = ({ scale, editor, title, pages, focusedPage }) => ({
   scale,
   editor,
-  scene
+  title,
+  page: { ...pages.map[pages.focusedPage] }
 });
 
 export default connect(
@@ -293,6 +312,7 @@ export default connect(
     toggleEditor,
     newNode,
     setFocusedNode,
-    updateScene
+    updateSceneTitle,
+    updatePage
   }
 )(Nav);

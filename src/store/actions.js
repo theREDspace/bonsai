@@ -1,11 +1,4 @@
-export * from "../node/NodeActions"
-export * from "../editor/edit/EditActions"
+export * from "../page/PageActions";
+export * from "../scene/SceneActions";
 export * from "../editor/key/KeyActions"
 export * from "../link/LinkActions"
-export * from "../app/NavActions"
-
-export const setWarning = ({ warningMessage, warning }) => ({
-  type: "WARNING_MESSAGE",
-  warning,
-  warningMessage
-})

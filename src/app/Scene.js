@@ -14,18 +14,21 @@ export default function Scene({ match }) {
   focusedStore = store(match.params.id)
   focusedStore.subscribe(() => {
     throttle(() => {
-      saveState(focusedStore.getState())
-      exportState(focusedStore.getState())
+      saveState(focusedStore.getState());
+      exportState(focusedStore.getState());
     }, 1000)
   })
 
   return (
     <Provider store={focusedStore}>
       <Fragment>
-        <Tree />
+        {/* <Tree /> */}
         <Editor />
         <Nav />
-        <Tooltip />
+        {/* <Tree />
+        <Editor />
+        <Nav />
+        <Tooltip /> */}
       </Fragment>
     </Provider>
   )
