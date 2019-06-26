@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Grid, Button, Dialog, DialogTitle, DialogActions } from '@material-ui/core';
+import { Grid, Button, Dialog, DialogTitle, DialogActions, Typography } from '@material-ui/core';
 import { setFocusedPage, newPage, deletePage } from '../../store/actions';
 import { uuid } from '../../lib/math';
 
@@ -58,13 +58,13 @@ function SceneExplorer(props) {
     }
 
     return (
-        <div style={{marginTop: 100}}>
+        <div style={{marginTop: 50}}>
+            <Typography variant="h4" gutterBottom>Scene Explorer</Typography>
             <Button variant="contained" onClick={handleNewPageClick}>NEW PAGE</Button>
             <Button variant="contained" onClick={handleDeletePageClick} disabled={!props.pages.map[props.pages.focusedPage].allowDelete}>DELETE PAGE</Button>
             <Grid container>
                 {renderPageList()}
             </Grid>
-
             <Dialog
                 open={isDialogOpen}
             >
