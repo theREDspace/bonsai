@@ -245,6 +245,7 @@ class Nav extends Component {
             hinttext="Page Title"
             onChange={this.handlePageTitleUpdate}
             value={page.title || ""}
+            disabled={!page.allowTitleChange}
             label="Page Title"
           />
         </Toolbar>

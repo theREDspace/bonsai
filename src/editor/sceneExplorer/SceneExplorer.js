@@ -60,7 +60,7 @@ function SceneExplorer(props) {
     return (
         <div style={{marginTop: 100}}>
             <Button variant="contained" onClick={handleNewPageClick}>NEW PAGE</Button>
-            <Button variant="contained" onClick={handleDeletePageClick} disabled={props.pages.order.length == 1}>DELETE PAGE</Button>
+            <Button variant="contained" onClick={handleDeletePageClick} disabled={!props.pages.map[props.pages.focusedPage].allowDelete}>DELETE PAGE</Button>
             <Grid container>
                 {renderPageList()}
             </Grid>

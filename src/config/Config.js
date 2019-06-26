@@ -33,7 +33,6 @@ export function createReducers() {
 
 export function createNewScene(id) {
     const pageId = uuid();
-    const testId = uuid();
     return {
         id: id || uuid(),
         title: null,
@@ -42,10 +41,9 @@ export function createNewScene(id) {
         warning: { },
         pages: {
             focusedPage: pageId,
-            order: [pageId, testId],
+            order: [pageId],
             map: {
-                [pageId]: createNewPage(pageId),
-                [testId]: createNewPage(testId)
+                [pageId]: { ...createNewPage(pageId), isIndex: true, allowDelete: false, allowTitleChange: false, title: "Index"}
             }
         }
     };
@@ -58,6 +56,9 @@ export function createNewPage(id) {
         focusedNode: nodeId,
         focusedLink: { status: false, from: "", to: "" },
         title: null,
+        isIndex: false,
+        allowDelete: true,
+        allowTitleChange: true,
         nodes: { 
             [nodeId]: createNewNode(nodeId) 
         }
