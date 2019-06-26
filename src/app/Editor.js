@@ -76,13 +76,12 @@ class Editor extends Component {
     }
     const tabs = [
       <EditTab key={0} />,
-      <KeyTab key={1} />,
-      <HelpTab key={2} />,
-      <div key={3} style={styles.tabContent}>
+      <HelpTab key={1} />,
+      <div key={2} style={styles.tabContent}>
         <h1>Settings...</h1>
         <p>eventually</p>
       </div>,
-      <SceneExplorer />
+      <SceneExplorer key={3} />
     ]
 
     return (
@@ -91,29 +90,24 @@ class Editor extends Component {
         <div style={styles.tabs}>
           <BottomNavigation selectedindex={this.state.editorTab}>
             <BottomNavigationAction
-              icon={settingsIcon}
-              onClick={() => this.select(4)}
-              data-tip={"Scene Explorer"}
-            />
-            <BottomNavigationAction
               icon={editIcon}
               onClick={() => this.select(0)}
               data-tip={"Edit"}
             />
             <BottomNavigationAction
-              icon={keyIcon}
-              onClick={() => this.select(1)}
-              data-tip={"Variables"}
-            />
-            <BottomNavigationAction
               icon={helpIcon}
-              onClick={() => this.select(2)}
+              onClick={() => this.select(1)}
               data-tip={"Help"}
             />
             <BottomNavigationAction
               icon={settingsIcon}
-              onClick={() => this.select(3)}
+              onClick={() => this.select(2)}
               data-tip={"Settings"}
+            />
+            <BottomNavigationAction
+              icon={settingsIcon}
+              onClick={() => this.select(3)}
+              data-tip={"Scene Explorer"}
             />
           </BottomNavigation>
         </div>

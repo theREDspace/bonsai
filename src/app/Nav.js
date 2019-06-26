@@ -215,8 +215,6 @@ class Nav extends Component {
       styles[`direction${capitalize(direction)}`]
     );
 
-    console.log(page.title)
-
     return (
       <Fragment>
         <Toolbar style={styles.container}>

@@ -38,7 +38,7 @@ class EditTab extends Component {
       maxRetries = "0",
       errorMessage = "",
       conditions = ""
-    } = this.props
+    } = this.props;
 
     return (
       <div style={styles.tabContent}>
