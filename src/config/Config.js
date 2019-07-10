@@ -67,10 +67,10 @@ export function createNewPage(id) {
     };
 }
 
-export function createNewNode(id) {
+export function createNewNode(id, type) {
     return {
         id: id || uuid(),
-        type: "dialogue",
+        type: type || "dialogue",
         title: "Start",
         tags: ["Intro", "test"],
         body: "And so our adventure begins...",

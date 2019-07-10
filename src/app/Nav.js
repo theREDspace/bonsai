@@ -168,20 +168,8 @@ class Nav extends Component {
         gridSize *
         scale
     ];
-    newNode({
-      id: newId,
-      payload: {
-        id: newId,
-        type,
-        title: "untitled",
-        pos: newPos,
-        linkable: true,
-        collapsed: false,
-        bounds: [210],
-        ...diffs
-      }
-    });
-    setFocusedNode({ id: newId });
+    newNode({ id : newId, type: type});
+    setFocusedNode({ focusedNode: newId });
   };
 
   handleSceneTitleUpdate = e => {

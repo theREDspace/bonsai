@@ -45,10 +45,6 @@ class NodeList extends Component {
   }
 
   handleNodePositionAdjust(event, data) {
-    console.log(data.x,)
-    const { scale } = this.props
-
-
     this.props.updateNode({
       id: this.props.page.focusedNode,
       pos: [data.x, data.y]

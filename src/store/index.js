@@ -8,7 +8,6 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = id => {
   const initialState = JSON.parse(localStorage.getItem(id)) || createNewScene(id);
   if (process.env.NODE_ENV === "development") {
-    console.log("ASDSDASDASDASDASDASDASD")
     return createStore(
       reducers,
       initialState,

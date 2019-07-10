@@ -1,4 +1,4 @@
-import { pageActionTypes, createNewPage } from "../config/Config";
+import { pageActionTypes, createNewPage, createNewNode } from "../config/Config";
 
 export function pageReducer (pages = { }, { type, payload }) {
     switch (type) {
@@ -80,19 +80,30 @@ const updatePage = (pages, payload) => {
     };
 };
 
-const createNewNodeOnPage =(pages, payload) => {
-    console.error("TODO - Implement " + "createNewNodeOnPage in PageReducer.js");
-    return { ...pages };
+const createNewNodeOnPage = (pages, payload) => {
+    const page = getCurrentPage(pages);
+    return {
+        ...pages,
+        map: {
+            ...pages.map,
+            [pages.focusedPage]: {
+                ...page,
+                nodes: {
+                    ...page.nodes,
+                    [payload.id]: createNewNode(payload.id, payload.type)
+                }
+            }
+        }
+    }
 };
 
 const deleteNodeFromPage = (pages, payload) => {
-    console.error("TODO - Implement " + "deleteNodeFromPage in PageReducer.js");
+    console.error("TODO - Implement deleteNodeFromPage in PageReducer.js");
     return { ...pages };
 };
 
 const updateNodeInPage = (pages, payload) => {
     //look at nested combined reducers to see if that simplifies this
-    console.log("CATS!" + payload)
     const page = getCurrentPage(pages);
     return {
         ...pages,
@@ -117,6 +128,15 @@ const setFocusedPage = (pages, payload) => {
 };
 
 const setFocusedNodeOnPage = (pages, payload) => {
-    console.error("TODO - Implement " + "setFocusedNodeOnPage in PageReducer.js");
-    return { ...pages };
+    const page = getCurrentPage(pages);
+    return {
+        ...pages,
+        map: {
+            ...pages.map,
+            [pages.focusedPage]: {
+                ...page,
+                ...payload
+            }
+        }
+    }
 };
