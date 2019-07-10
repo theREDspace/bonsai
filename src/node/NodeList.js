@@ -44,14 +44,12 @@ class NodeList extends Component {
     nonLinkables: []
   }
 
-  handleNodePositionAdjust(event, data) {
+  handleNodePositionAdjust(event, data, id) {
     this.props.updateNode({
-      id: this.props.page.focusedNode,
+      id,
       pos: [data.x, data.y]
     })
   }
-
-
 
   isFocusedNode = id => {
     return this.props.FocusedNode === id
@@ -91,9 +89,18 @@ class NodeList extends Component {
             //   }
             //   if (FocusedNode !== node.id) setFocusedNode({ id: node.id })
             // }
+
+            //if(page.focusedNode !== node.id){
+              this.props.setFocusedNode({focusedNode:node.id})
+            //}
           }}
-          onDrag={(e, data) => this.handleNodePositionAdjust(e, data)}
-          onStop={(e, data) => this.handleNodePositionAdjust(e, data)}
+          onDrag={(e, data) =>  {
+            //This is so that links between nodes update properly during drag
+            this.handleNodePositionAdjust(e, data, node.id)
+          }}
+          onStop={(e, data) =>  {
+            this.handleNodePositionAdjust(e, data, node.id)
+          }}
         >
           <div
             id={node.id}
@@ -104,7 +111,7 @@ class NodeList extends Component {
           >
           <Node
               {...{
-                ...page.nodes[page.focusedNode],
+                ...node,
                 updateNode,
                 setFocusedLink,
                 deleteAllLinks,
@@ -124,17 +131,6 @@ class NodeList extends Component {
     })
   }
 }
-
-// const mapState = ({ scale, nodes, FocusedLink, FocusedNode }) => ({
-//   scale,
-//   nodes,
-//   FocusedLink,
-//   FocusedNode
-// })
-
-/*function mapState({ scale, pages, focusedPage }) {
-  return { scale, ...pages[focusedPage] };
-}*/
 
 const mapState = ({ scale, editor, title, pages, focusedPage }) => ({
   scale,

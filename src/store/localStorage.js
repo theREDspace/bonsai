@@ -23,6 +23,7 @@ export const loadState = id => {
 
 export const saveState = state => {
   try {
+    //TODO:  Jon said he knows the best way to do this
     const serial = JSON.stringify(state)
     localStorage.setItem(state.id, serial)
   } catch (err) {
