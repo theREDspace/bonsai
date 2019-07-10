@@ -145,7 +145,7 @@ export default class Landing extends Component {
             this.state.remainingSpace
           }`}
         </div>
-        <input type="file" id="selectFiles" />
+        <input type="file" id="selectFiles" value="" />
         <br />
         <button id="import" onClick={this.uploadFile}>
           Import

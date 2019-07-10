@@ -37,14 +37,13 @@ const styles = {
 
 class Tree extends Component {
   static propTypes = {
-    nodes: PropTypes.object.isRequired,
+    page: PropTypes.object.isRequired,
     scale: PropTypes.number.isRequired,
     newNode: PropTypes.func.isRequired,
     updateNode: PropTypes.func.isRequired,
     setFocusedNode: PropTypes.func.isRequired,
     setFocusedLink: PropTypes.func.isRequired,
     setWarning: PropTypes.func.isRequired,
-    FocusedLink: PropTypes.object.isRequired
   }
 
   state = {
@@ -56,10 +55,10 @@ class Tree extends Component {
   }
 
   render() {
-    const { nodes, FocusedLink, scale, setFocusedLink } = this.props
-    const boundary = dimensions(Object.values(nodes), scale)
+    const { page, scale} = this.props
+    const boundary = dimensions(Object.values(page.nodes), scale)
     return (
-      <div onMouseMove={this.handleMouse}>
+     <div onMouseMove={this.handleMouse}>
         <div
           style={{
             transform: `scale(${scale})`,
@@ -83,7 +82,9 @@ class Tree extends Component {
             }}
           >
             <NodeList />
-            {/* <LinkContainer mouseEvent={this.state.mouseEvent} /> */}
+             {
+               <LinkContainer mouseEvent={this.state.mouseEvent} />
+             }
           </div>
         </div>
       </div>
@@ -97,12 +98,10 @@ class Tree extends Component {
 //   nodes
 // })
 
-function mapState({ scale, pages, focusedPage }) {
-  return {
-    scale,
-    ...pages[focusedPage]
-  };
-}
+const mapState = ({ scale, editor, title, pages, focusedPage }) => ({
+  scale,
+  page: { ...pages.map[pages.focusedPage] }
+});
 
 export default connect(mapState, {
   newNode,

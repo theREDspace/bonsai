@@ -17,9 +17,7 @@ const styles = {
 
 class LinkContainer extends Component {
   static propTypes = {
-    links: PropTypes.array.isRequired,
-    FocusedLink: PropTypes.object.isRequired,
-    FocusedNode: PropTypes.string.isRequired,
+    page: PropTypes.object.isRequired,
     mouseEvent: PropTypes.object.isRequired,
     deleteLink: PropTypes.func.isRequired,
     setFocusedLink: PropTypes.func.isRequired,
@@ -39,20 +37,19 @@ class LinkContainer extends Component {
 
   render() {
     const {
-      links,
-      FocusedLink,
+      page,
       mouseEvent,
       setFocusedLink,
       setFocusedNode,
       deleteLink
     } = this.props
     const { mounted } = this.state
-    const linkList = links.map(link => (
+    const linkList = page.links.map(link => (
       <Link
         key={`${link[0]}-${link[1]}`}
         from={link[0]}
         to={link[1]}
-        FocusedLink={FocusedLink}
+        FocusedLink={page.focusedLink}
         FocusedNode={this.isFocusedNode(link[0])}
         setFocusedLink={setFocusedLink}
         setFocusedNode={setFocusedNode}
@@ -78,7 +75,7 @@ class LinkContainer extends Component {
           </defs>
           {mounted && linkList}
         </svg>
-        {FocusedLink.status && (
+        {page.focusedLink.status && (
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="100%"
@@ -99,11 +96,11 @@ class LinkContainer extends Component {
               </marker>
             </defs>
             <Link
-              from={FocusedLink.from}
-              linking={FocusedLink.status}
+              from={page.focusedLink.from}
+              linking={page.focusedLink.status}
               mouse={mouseEvent}
               FocusedNode={true}
-              FocusedLink={FocusedLink}
+              FocusedLink={page.focusedLink}
               setFocusedLink={setFocusedLink}
               setFocusedNode={setFocusedNode}
               deleteLink={deleteLink}
@@ -116,11 +113,17 @@ class LinkContainer extends Component {
   }
 }
 
-const mapState = ({ links, FocusedLink, FocusedNode }) => ({
+
+const mapState = ({ scale, editor, title, pages, focusedPage}) => ({
+  scale,
+  page: { ...pages.map[pages.focusedPage] }
+});
+
+/*const mapState = ({ links, FocusedLink, FocusedNode }) => ({
   links,
   FocusedLink,
   FocusedNode
-})
+})*/
 
 export default connect(mapState, {
   setFocusedLink,

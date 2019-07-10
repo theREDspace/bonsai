@@ -22,7 +22,7 @@ export function pageReducer (pages = { }, { type, payload }) {
 
         case pageActionTypes.SET_FOCUSED_PAGE:
             return setFocusedPage(pages, payload);
-    
+
         case pageActionTypes.SET_PAGE_FOCUSED_NODE:
             return setFocusedNodeOnPage(pages, payload);
 
@@ -34,7 +34,7 @@ export function pageReducer (pages = { }, { type, payload }) {
 const getCurrentPage = (pages) => pages.map[pages.focusedPage];
 
 const createPage = (pages, { id }) => {
-    return { 
+    return {
         ...pages,
         order: pages.order.concat(id),
         map: {
@@ -68,7 +68,7 @@ const deletePage = (pages, { id }) => {
 
 const updatePage = (pages, payload) => {
     const page = getCurrentPage(pages);
-    return { 
+    return {
         ...pages,
         map: {
             ...pages.map,
@@ -91,6 +91,8 @@ const deleteNodeFromPage = (pages, payload) => {
 };
 
 const updateNodeInPage = (pages, payload) => {
+    //look at nested combined reducers to see if that simplifies this
+    console.log("CATS!" + payload)
     const page = getCurrentPage(pages);
     return {
         ...pages,

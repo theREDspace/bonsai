@@ -10,7 +10,7 @@ export default function NodeFooter({
 }) {
   return (
     <Fragment>
-      <CardActions disableActionSpacing>
+      <CardActions disableactioncpacing="true">
         <IconButton
           onClick={() => {
             deleteAllLinks({ id })
@@ -25,7 +25,7 @@ export default function NodeFooter({
 }
 
 NodeFooter.propTypes = {
-  id: PropTypes.string.isRequired,
+  //id: PropTypes.string.isRequired,
   setFocusedLink: PropTypes.func.isRequired,
   deleteAllLinks: PropTypes.func.isRequired,
   deleteNode: PropTypes.func.isRequired

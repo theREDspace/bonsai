@@ -49,7 +49,7 @@ export default function NodeHeader({
 
 NodeHeader.propTypes = {
   title: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
+  //type: PropTypes.string.isRequired,
   body: PropTypes.string.isRequired,
   color: PropTypes.string.isRequired,
 

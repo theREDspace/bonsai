@@ -4,6 +4,7 @@ import * as SceneReducers from "../scene/SceneReducers";
 
 export const sceneActionTypes = {
     UPDATE_SCENE_TITLE: "UPDATE_SCENE_TITLE",
+    DELETE_SCENE_TITLE: "DELETE_SCENE_TITLE",
     UPDATE_SCENE_SCALE: "UPDATE_SCENE_SCALE",
     TOGGLE_EDITOR: "TOGGLE_EDITOR",
     WARNING_MESSAGE: "WARNING_MESSAGE"
@@ -59,8 +60,9 @@ export function createNewPage(id) {
         isIndex: false,
         allowDelete: true,
         allowTitleChange: true,
-        nodes: { 
-            [nodeId]: createNewNode(nodeId) 
+        links: [],
+        nodes: {
+            [nodeId]: createNewNode(nodeId)
         }
     };
 }
@@ -72,7 +74,7 @@ export function createNewNode(id) {
         title: "Start",
         tags: ["Intro", "test"],
         body: "And so our adventure begins...",
-        pos: [910, 90],
+        pos: [100, 100],
         bounds: [210],
         linkable: true,
         collapsed: false,

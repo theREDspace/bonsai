@@ -10,13 +10,11 @@ import PropTypes from "prop-types"
 import { connect } from "react-redux"
 import EditTab from "../editor/edit/Edit"
 import HelpTab from "../editor/help/Help"
-import KeyTab from "../editor/key/Key"
 import { toggleEditor } from "../store/actions"
 import SceneExplorer from "../editor/sceneExplorer/SceneExplorer";
 
 const menuIcon = <Icon className="material-icons">menu</Icon>
 const editIcon = <Icon className="material-icons">mode_edit</Icon>
-const keyIcon = <Icon className="material-icons">vpn_key</Icon>
 const helpIcon = <Icon className="material-icons">help</Icon>
 const settingsIcon = <Icon className="material-icons">settings</Icon>
 

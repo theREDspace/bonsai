@@ -106,7 +106,7 @@ class Nav extends Component {
     setFocusedNode: PropTypes.func.isRequired,
     newNode: PropTypes.func.isRequired,
     editor: PropTypes.bool.isRequired,
-    title: PropTypes.string.isRequired
+    //title: PropTypes.string.isRequired
   };
 
   state = {
@@ -207,7 +207,6 @@ class Nav extends Component {
       return <Redirect to={this.state.redirect} />;
     }
 
-    const { classes } = this.props;
     const { direction, hidden, open } = this.state;
 
     const speedDialClassName = classNames(
@@ -234,7 +233,7 @@ class Nav extends Component {
             textareastyle={styles.textStyle}
             hinttext="Scene Title"
             onChange={this.handleSceneTitleUpdate}
-            value={title}
+            value={title || ""}
             label="Scene Title"
           />
           <TextField

@@ -2,12 +2,14 @@ import React, { Component } from "react"
 import { connect } from "react-redux"
 import Draggable from "react-draggable"
 import PropTypes from "prop-types"
-import NodeContainer from "./NodeContainer"
+import Node from "./Node"
 import {
   setFocusedNode,
   setFocusedLink,
   newLink,
-  updateNode
+  updateNode,
+  deleteAllLinks,
+  deleteNode
 } from "../store/actions"
 import { gridSize } from "../lib/view"
 
@@ -29,9 +31,7 @@ const styles = {
 class NodeList extends Component {
   static propTypes = {
     scale: PropTypes.number.isRequired,
-    nodes: PropTypes.object.isRequired,
-    FocusedLink: PropTypes.object.isRequired,
-    FocusedNode: PropTypes.string.isRequired,
+    page: PropTypes.object.isRequired,
     setFocusedNode: PropTypes.func.isRequired,
     setFocusedLink: PropTypes.func.isRequired,
     newLink: PropTypes.func.isRequired,
@@ -45,75 +45,81 @@ class NodeList extends Component {
   }
 
   handleNodePositionAdjust(event, data) {
+    console.log(data.x,)
     const { scale } = this.props
-    this.setState({
-      xAdjust: data.deltaX / scale,
-      yAdjust: data.deltaY / scale
+
+
+    this.props.updateNode({
+      id: this.props.page.focusedNode,
+      pos: [data.x, data.y]
     })
   }
 
-  handleNodePositionUpdate(event, data, id) {
-    this.props.updateNode({
-      id,
-      payload: { pos: [data.lastX, data.lastY] }
-    })
-    this.setState({ xAdjust: 0, yAdjust: 0 })
-  }
+
 
   isFocusedNode = id => {
     return this.props.FocusedNode === id
   }
 
   render() {
-    const {
+    /*const {
       nodes,
       FocusedLink,
       setFocusedNode,
       setFocusedLink,
       newLink,
       FocusedNode
-    } = this.props
-    return Object.values(nodes).map(n => {
+    } = this.props*/
+
+    const { page} = this.props
+
+    return Object.values(page.nodes).map(node => {
       return (
         <Draggable
-          key={n.id}
+          key={node.id}
           position={{
-            x: Math.round(n.pos[0] / gridSize) * gridSize,
-            y: Math.round(n.pos[1] / gridSize) * gridSize
+            x: Math.round(node.pos[0] / gridSize) * gridSize,
+            y: Math.round(node.pos[1] / gridSize) * gridSize
           }}
           handle=".draggable"
           grid={[gridSize, gridSize]}
           onMouseDown={() => {
-            // if (n.linkable) {
+            // if (node.linkable) {
             //   if (FocusedLink.status) {
             //     newLink({
             //       from: FocusedLink.from,
-            //       to: n.id,
+            //       to: node.id,
             //       outIndex: FocusedLink.outIndex
             //     })
             //     return setFocusedLink({ status: false , outIndex:FocusedLink.outIndex})
             //   }
-            //   if (FocusedNode !== n.id) setFocusedNode({ id: n.id })
+            //   if (FocusedNode !== node.id) setFocusedNode({ id: node.id })
             // }
           }}
           onDrag={(e, data) => this.handleNodePositionAdjust(e, data)}
-          onStop={(e, data) => {
-            if (this.state.xAdjust !== 0 || this.state.yAdjust !== 0)
-              this.handleNodePositionUpdate(e, data, n.id)
-          }}
+          onStop={(e, data) => this.handleNodePositionAdjust(e, data)}
         >
           <div
-            id={n.id}
+            id={node.id}
             style={{
               ...styles.dragContainer,
-              zIndex: this.isFocusedNode(n.id) ? 10 : 1
+              zIndex: this.isFocusedNode(node.id) ? 10 : 1
             }}
           >
-            <NodeContainer id={n.id} />
+          <Node
+              {...{
+                ...page.nodes[page.focusedNode],
+                updateNode,
+                setFocusedLink,
+                deleteAllLinks,
+                deleteNode
+              }}
+            />
+
             <div
               style={{
                 ...styles.overlay,
-                display: n.linkable ? "none" : "block"
+                display: node.linkable ? "none" : "block"
               }}
             />
           </div>
@@ -130,13 +136,21 @@ class NodeList extends Component {
 //   FocusedNode
 // })
 
-function mapState({ scale, pages, focusedPage }) {
+/*function mapState({ scale, pages, focusedPage }) {
   return { scale, ...pages[focusedPage] };
-}
+}*/
+
+const mapState = ({ scale, editor, title, pages, focusedPage }) => ({
+  scale,
+  editor,
+  title,
+  page: { ...pages.map[pages.focusedPage] }
+});
 
 export default connect(mapState, {
   setFocusedNode,
   setFocusedLink,
   newLink,
-  updateNode
+  updateNode,
+  deleteAllLinks
 })(NodeList)

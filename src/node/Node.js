@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { Card, Typography, Icon } from "@material-ui/core";
 import NodeHeader from "./fragments/NodeHeader";
 import NodeFooter from "./fragments/NodeFooter";
-import { setFocusedNode } from "./NodeActions";
 
 const styles = {
   body: {
@@ -21,8 +20,8 @@ const styles = {
 class Node extends Component {
   static propTypes = {
     current: PropTypes.bool.isRequired,
-    id: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
+    //id: PropTypes.string.isRequired,
+    //type: PropTypes.string.isRequired,
     title: PropTypes.string,
     body: PropTypes.string,
     prev: PropTypes.array,
@@ -63,6 +62,22 @@ class Node extends Component {
     this.setState({ widthAdjustment: 0 });
   };
 
+  componentWillReceiveProps(nextProps) {
+    /*if (nextProps.page.focusedLink.status !== this.props.page.focusedLink.status) {
+      const { id, updateNode, node } = this.props
+      if (nextProps.node.id === nextProps.page.focusedLink.from) {
+        nextProps.node.next.forEach(n => {
+          updateNode({ id: n, payload: { linkable: false } })
+        })
+      }
+      if (node.linkable === false) {
+        updateNode({ id, payload: { linkable: true } })
+      }
+    }*/
+
+    //updateNode({ id:nextProps.id, payload: { linkable: true } })
+  }
+
   render() {
     const {
       id,
@@ -101,7 +116,6 @@ class Node extends Component {
           style={{ position: "absolute", left: 205, width: 25, height: 25 }}
           onClick={() => {
             console.log("node id: " + id);
-            setFocusedNode({ id: id });
             setFocusedLink({
               status: true,
               from: id,
@@ -123,7 +137,6 @@ class Node extends Component {
             }}
             onClick={() => {
               console.log("node id: " + id);
-              setFocusedNode({ id: id });
               setFocusedLink({
                 status: true,
                 from: id,

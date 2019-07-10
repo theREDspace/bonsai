@@ -22,7 +22,7 @@ export default function Scene({ match }) {
   return (
     <Provider store={focusedStore}>
       <Fragment>
-        {/* <Tree /> */}
+        <Tree />
         <Editor />
         <Nav />
         {/* <Tree />
