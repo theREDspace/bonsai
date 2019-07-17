@@ -98,8 +98,20 @@ const createNewNodeOnPage = (pages, payload) => {
 };
 
 const deleteNodeFromPage = (pages, payload) => {
-    console.error("TODO - Implement deleteNodeFromPage in PageReducer.js");
-    return { ...pages };
+    let newPages= {...pages};
+    let index = 0;
+    let nodes = {...newPages.map[newPages.focusedPage].nodes};
+    let keys = Object.keys(nodes);
+    for(let i=0; i<keys.length; i++)
+    {
+      if(nodes[keys[i]].id === payload.id)
+      {
+        index = i;
+        break;
+      }
+    }
+    delete newPages.map[newPages.focusedPage].nodes[keys[index]];
+    return { ...newPages };
 };
 
 const updateNodeInPage = (pages, payload) => {
