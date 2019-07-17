@@ -11,7 +11,6 @@ class NodeFooter extends Component
 {
   static propTypes = {
   id: PropTypes.string.isRequired,
-  setFocusedLink: PropTypes.func.isRequired,
   deleteAllLinks: PropTypes.func.isRequired,
   deleteNode: PropTypes.func.isRequired
   }
@@ -19,13 +18,12 @@ class NodeFooter extends Component
   render(){
     const {
       id,
-      setFocusedLink,
       deleteAllLinks,
       deleteNode
     } = this.props
     return (
       <Fragment>
-        <CardActions disableSpacing="true">
+        <CardActions disablecpacing="true">
           <IconButton
             onClick={() => {
               deleteAllLinks({ id })

@@ -108,6 +108,9 @@ class Node extends Component {
         <div
           className="inNode"
           style={{ position: "absolute", left: -20, width: 25, height: 25 }}
+          onClick={()=>{
+            console.log("in node clicked");
+          }}
         >
           <Icon className="material-icons">keyboard_arrow_left</Icon>
         </div>
@@ -115,7 +118,6 @@ class Node extends Component {
           className="outNode"
           style={{ position: "absolute", left: 205, width: 25, height: 25 }}
           onClick={() => {
-            console.log("node id: " + id);
             setFocusedLink({
               status: true,
               from: id,
