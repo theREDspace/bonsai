@@ -25,7 +25,7 @@ class NodeFooter extends Component
     } = this.props
     return (
       <Fragment>
-        <CardActions disableactioncpacing="true">
+        <CardActions disableSpacing="true">
           <IconButton
             onClick={() => {
               deleteAllLinks({ id })
