@@ -2,10 +2,8 @@ import React, { Component, Fragment } from "react"
 import PropTypes from "prop-types"
 import { CardActions, IconButton, Icon } from "@material-ui/core"
 import { connect } from "react-redux";
-import {
-  deleteAllLinks,
-  deleteNode
-} from "../../store/actions"
+import { deleteNode } from "../../page/PageActions"
+import { deleteAllLinks } from "../../link/LinkActions"
 
 class NodeFooter extends Component
 {
@@ -38,13 +36,7 @@ class NodeFooter extends Component
   }
 }
 
-// NOT SURE WHAT NEEDS TO BE SYNCED HERE
-const mapState = ({ scale, pages }) => ({
-  scale,
-  page: { ...pages.map[pages.focusedPage] }
-});
-
-export default connect(mapState, {
+export default connect(null, {
   deleteAllLinks,
   deleteNode
 })(NodeFooter)

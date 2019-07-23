@@ -228,8 +228,8 @@ class Nav extends Component {
             name="pageTitle"
             fullWidth
             style={styles.textField}
-            textareastyle={styles.textStyle} //I don't see this prop in the documentation
-            hinttext="Page Title" // I don't see this one either
+            textareastyle={styles.textStyle}
+            hinttext="Page Title"
             onChange={this.handlePageTitleUpdate}
             value={page.title || ""}
             disabled={!page.allowTitleChange}
