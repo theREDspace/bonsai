@@ -5,12 +5,14 @@ import PropTypes from "prop-types"
 import Node from "./Node"
 import {
   setFocusedNode,
-  setFocusedLink,
-  newLink,
   updateNode,
-  deleteAllLinks,
   deleteNode
-} from "../store/actions"
+} from "../page/PageActions";
+import {
+  newLink,
+  deleteAllLinks,
+  setFocusedLink,
+} from "../link/LinkActions";
 import { gridSize } from "../lib/view"
 
 const styles = {

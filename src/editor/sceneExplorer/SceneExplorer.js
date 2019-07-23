@@ -1,11 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Grid, Button, Dialog, DialogTitle, DialogActions, Typography } from '@material-ui/core';
-import { setFocusedPage, newPage, deletePage } from '../../store/actions';
+import {
+  setFocusedPage,
+  newPage,
+  deletePage
+} from '../../page/PageActions';
 import { uuid } from '../../lib/math';
 
 const buttonStyle = {
-    textTransform: 'none', 
+    textTransform: 'none',
     fontSize: 24
 }
 

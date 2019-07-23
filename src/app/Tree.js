@@ -2,13 +2,17 @@ import React, { Component } from "react"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import {
-  newNode,
-  updateNode,
-  setFocusedNode,
-  setFocusedLink,
   toggleEditor,
   setWarning
-} from "../store/actions"
+} from "../scene/SceneActions";
+import {
+  setFocusedNode,
+  newNode,
+  updateNode,
+} from "../page/PageActions";
+import {
+  setFocusedLink,
+} from "../link/LinkActions";
 import NodeList from "../node/NodeList"
 import LinkContainer from "../link/LinkContainer"
 import { dimensions } from "../lib/view"

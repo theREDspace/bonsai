@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { TextField } from "@material-ui/core"
-import { updateNode } from "../../store/actions";
+import { updateNode } from "../../page/PageActions";
 
 const styles = {
   textStyle: {
