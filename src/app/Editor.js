@@ -10,7 +10,7 @@ import PropTypes from "prop-types"
 import { connect } from "react-redux"
 import EditTab from "../editor/edit/Edit"
 import HelpTab from "../editor/help/Help"
-import { toggleEditor } from "../store/actions"
+import { toggleEditor } from "../scene/SceneActions"
 import SceneExplorer from "../editor/sceneExplorer/SceneExplorer";
 
 const menuIcon = <Icon className="material-icons">menu</Icon>

@@ -2,7 +2,13 @@ import React, { Component, Fragment } from "react"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import Link from "./Link"
-import { setFocusedLink, deleteLink, setFocusedNode } from "../store/actions"
+import {
+  setFocusedNode,
+} from "../page/PageActions"
+import {
+  setFocusedLink,
+  deleteLink
+} from "../link/LinkActions"
 import { layers } from "../lib/view"
 
 const styles = {

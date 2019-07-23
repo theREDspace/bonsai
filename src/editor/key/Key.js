@@ -13,8 +13,10 @@ import {
   Popover,
   TextField
 } from "@material-ui/core"
-
-import { newKey, deleteKey } from "../../store/actions"
+import {
+  newKey,
+  deleteKey
+} from "../../key/KeyActions"
 
 // const editIcon = <Icon className="material-icons">mode_edit</Icon>
 const deleteIcon = <Icon className="material-icons">delete</Icon>

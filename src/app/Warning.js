@@ -2,7 +2,9 @@ import React from "react"
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { Snackbar } from "@material-ui/core"
-import { setWarning } from "../store/actions"
+import {
+  setWarning
+} from "../scene/SceneActions";
 
 function Warning({ warning, setWarning }) {
   return (

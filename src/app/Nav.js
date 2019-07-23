@@ -8,11 +8,13 @@ import { uuid } from "../lib/math";
 import { gridSize } from "../lib/view";
 import {
   toggleEditor,
+  updateSceneTitle,
+} from "../scene/SceneActions";
+import {
   setFocusedNode,
   newNode,
-  updateSceneTitle,
   updatePage
-} from "../store/actions";
+} from "../page/PageActions";
 import { saveState } from "../store/localStorage";
 import { exportState } from "../store/export";
 import { focusedStore } from "../app/Scene";
