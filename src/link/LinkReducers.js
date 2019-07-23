@@ -6,8 +6,10 @@ export const FocusedLink = (state = {}, { type, status, from, to, outIndex}) => 
 }
 
 export const links = (state = [], { type, from, to, id, outIndex}) => {
+  console.log("LinkReducer Switch")
   switch (type) {
     case "NEW_LINK":
+      console.log("NEW_LINK")
       return [...state, [from, to, outIndex]]
     case "DELETE_LINK":
       return state.filter(link => (link[0] !== from) | (link[1] !== to))

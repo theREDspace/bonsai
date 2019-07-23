@@ -114,7 +114,7 @@ class Node extends Component {
           className="inNode"
           style={{ position: "absolute", left: -20, width: 25, height: 25 }}
           onClick={()=>{
-            console.log("in node clicked");
+            console.log("in-node clicked");
             console.log(this.props);
             // if(this.props.page..)
             // {
