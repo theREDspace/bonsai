@@ -1,25 +1,23 @@
 import React, { Component } from "react"
 import {
-  BottomNavigationItem,
+  BottomNavigationAction,
   BottomNavigation,
   Paper,
-  FontIcon,
+  Icon,
   IconButton
-} from "material-ui"
+} from "@material-ui/core"
 import PropTypes from "prop-types"
 import { connect } from "react-redux"
 import EditTab from "../editor/edit/Edit"
-import ActorTab from "../editor/actor/Actor"
 import HelpTab from "../editor/help/Help"
 import KeyTab from "../editor/key/Key"
 import { toggleEditor } from "../store/actions"
 
-const menuIcon = <FontIcon className="material-icons">menu</FontIcon>
-const editIcon = <FontIcon className="material-icons">mode_edit</FontIcon>
-const actorIcon = <FontIcon className="material-icons">group</FontIcon>
-const keyIcon = <FontIcon className="material-icons">vpn_key</FontIcon>
-const helpIcon = <FontIcon className="material-icons">help</FontIcon>
-const settingsIcon = <FontIcon className="material-icons">settings</FontIcon>
+const menuIcon = <Icon className="material-icons">menu</Icon>
+const editIcon = <Icon className="material-icons">mode_edit</Icon>
+const keyIcon = <Icon className="material-icons">vpn_key</Icon>
+const helpIcon = <Icon className="material-icons">help</Icon>
+const settingsIcon = <Icon className="material-icons">settings</Icon>
 
 const styles = {
   paper: {
@@ -77,10 +75,9 @@ class Editor extends Component {
     }
     const tabs = [
       <EditTab key={0} />,
-      <ActorTab key={1} />,
-      <KeyTab key={2} />,
-      <HelpTab key={3} />,
-      <div key={4} style={styles.tabContent}>
+      <KeyTab key={1} />,
+      <HelpTab key={2} />,
+      <div key={3} style={styles.tabContent}>
         <h1>Settings...</h1>
         <p>eventually</p>
       </div>
@@ -90,36 +87,31 @@ class Editor extends Component {
       <Paper style={{ ...styles.paper, ...hideEditor }}>
         <div style={styles.container}>{tabs[this.state.editorTab]}</div>
         <div style={styles.tabs}>
-          <BottomNavigation selectedIndex={this.state.editorTab}>
-            <BottomNavigationItem
+          <BottomNavigation selectedindex={this.state.editorTab}>
+            <BottomNavigationAction
               icon={editIcon}
               onClick={() => this.select(0)}
               data-tip={"Edit"}
             />
-            <BottomNavigationItem
-              icon={actorIcon}
-              onClick={() => this.select(1)}
-              data-tip={"Actors"}
-            />
-            <BottomNavigationItem
+            <BottomNavigationAction
               icon={keyIcon}
-              onClick={() => this.select(2)}
+              onClick={() => this.select(1)}
               data-tip={"Variables"}
             />
-            <BottomNavigationItem
+            <BottomNavigationAction
               icon={helpIcon}
-              onClick={() => this.select(3)}
+              onClick={() => this.select(2)}
               data-tip={"Help"}
             />
-            <BottomNavigationItem
+            <BottomNavigationAction
               icon={settingsIcon}
-              onClick={() => this.select(4)}
+              onClick={() => this.select(3)}
               data-tip={"Settings"}
             />
           </BottomNavigation>
         </div>
         <IconButton
-          iconStyle={styles.menuButton}
+        iconstyle={styles.menuButton}
           onClick={() => toggleEditor({ editor: !editor })}
         >
           {menuIcon}

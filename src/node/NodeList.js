@@ -88,9 +88,10 @@ class NodeList extends Component {
               if (FocusedLink.status) {
                 newLink({
                   from: FocusedLink.from,
-                  to: n.id
+                  to: n.id,
+                  outIndex: FocusedLink.outIndex
                 })
-                return setFocusedLink({ status: false })
+                return setFocusedLink({ status: false , outIndex:FocusedLink.outIndex})
               }
               if (FocusedNode !== n.id) setFocusedNode({ id: n.id })
             }

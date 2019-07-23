@@ -22,6 +22,7 @@ export const exportState = state => {
         }
 
         if(node.maxRetries > 0){
+          // eslint-disable-next-line no-unused-expressions
           stateJSON[node.title]["retryValue"] = node.maxRetries,
           stateJSON[node.title]["retryMessage"] = node.errorMessage
         }

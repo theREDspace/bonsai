@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { CardHeader, FontIcon } from "material-ui"
+import { CardHeader } from "@material-ui/core"
 
 const styles = {
   title: {
@@ -28,37 +28,22 @@ export default function NodeHeader({
   type,
   title,
   body,
-  actor,
-  color,
-  expanded,
-  expand
+  color
 }) {
   return (
     <CardHeader
-      title={type === "dialogue" ? title : expanded ? "" : body}
-      subtitle={actor}
-      subtitleStyle={styles.subtitle}
-      showExpandableButton
-      actAsExpander
+      title={type === "dialogue" ? title :  body}
+      subtitlestyle={styles.subtitle}
       style={{
         fontWeight: "bold",
         padding: 10,
         backgroundColor: `#${color}`,
         width: "100%"
       }}
-      titleStyle={type === "choice" ? styles.choicesTitle : styles.title}
-      textStyle={{ display: "block", padding: 0 }}
+      titlestyle={type === "choice" ? styles.choicesTitle : styles.title}
+      textstyle={{ display: "block", padding: 0 }}
       className={"draggable"}
-    >
-      {/* Placing header in seperate file requires handling and create expand button manually   */}
-      <FontIcon
-        style={styles.expand}
-        onClick={() => expand(!expanded)}
-        className="material-icons"
-      >
-        {expanded ? "keyboard_arrow_up" : "keyboard_arrow_down"}
-      </FontIcon>
-    </CardHeader>
+    />
   )
 }
 
@@ -67,7 +52,5 @@ NodeHeader.propTypes = {
   type: PropTypes.string.isRequired,
   body: PropTypes.string.isRequired,
   color: PropTypes.string.isRequired,
-  actor: PropTypes.string.isRequired,
-  expanded: PropTypes.bool.isRequired,
-  expand: PropTypes.func.isRequired
+
 }

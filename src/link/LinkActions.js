@@ -1,7 +1,8 @@
-export const newLink = ({ from, to }) => ({
+export const newLink = ({ from, to , outIndex}) => ({
   type: "NEW_LINK",
   from,
-  to
+  to,
+  outIndex
 })
 
 export const deleteLink = ({ from, to }) => ({
@@ -15,9 +16,10 @@ export const deleteAllLinks = ({ id }) => ({
   id
 })
 
-export const setFocusedLink = ({ status, from, to }) => ({
+export const setFocusedLink = ({ status, from, to, outIndex, }) => ({
   type: "SET_CURRENT_LINK",
   status,
   from,
-  to
+  to,
+  outIndex
 })

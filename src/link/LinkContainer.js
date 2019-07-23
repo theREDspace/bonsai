@@ -52,6 +52,7 @@ class LinkContainer extends Component {
         key={`${link[0]}-${link[1]}`}
         from={link[0]}
         to={link[1]}
+        FocusedLink={FocusedLink}
         FocusedNode={this.isFocusedNode(link[0])}
         setFocusedLink={setFocusedLink}
         setFocusedNode={setFocusedNode}
@@ -102,6 +103,7 @@ class LinkContainer extends Component {
               linking={FocusedLink.status}
               mouse={mouseEvent}
               FocusedNode={true}
+              FocusedLink={FocusedLink}
               setFocusedLink={setFocusedLink}
               setFocusedNode={setFocusedNode}
               deleteLink={deleteLink}
