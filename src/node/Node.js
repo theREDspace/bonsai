@@ -175,14 +175,9 @@ class Node extends Component {
     );
   }
 }
-const mapState = ({ scale, editor, pages, focusedPage }) => ({
-  scale,
-  editor,
-  page: { ...pages.map[pages.focusedPage] }
-});
 
 export default connect(
-  mapState,
+  null,
   {
     setFocusedLink,
     newLink
