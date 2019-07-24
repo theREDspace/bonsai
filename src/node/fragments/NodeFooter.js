@@ -5,8 +5,7 @@ import { connect } from "react-redux";
 import { deleteNode } from "../../page/PageActions"
 import { deleteAllLinks } from "../../link/LinkActions"
 
-class NodeFooter extends Component
-{
+class NodeFooter extends Component {
   static propTypes = {
   id: PropTypes.string.isRequired,
   deleteAllLinks: PropTypes.func.isRequired,
