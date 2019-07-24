@@ -1,4 +1,5 @@
 export const FocusedLink = (state = {}, { type, status, from, to, outIndex}) => {
+  console.log("FocusedLink");
   if (type === "SET_CURRENT_LINK") {
     return { ...state, status, from, to, outIndex }
   }

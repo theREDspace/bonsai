@@ -7,7 +7,7 @@ import {connect} from "react-redux";
 import {
   newLink,
   setFocusedLink
-} from "../store/actions";
+} from "../link/LinkActions";
 
 const styles = {
   body: {
@@ -114,8 +114,8 @@ class Node extends Component {
           className="inNode"
           style={{ position: "absolute", left: -20, width: 25, height: 25 }}
           onClick={()=>{
-            console.log("in-node clicked");
-            console.log(this.props);
+            console.log("in-node id: ", id);
+            console.log("PROPS: ", this.props);
             // if(this.props.page..)
             // {
               newLink({
@@ -150,7 +150,7 @@ class Node extends Component {
               height: 25
             }}
             onClick={() => {
-              console.log("node id: " + id);
+              console.log("out-node id: " + id);
               setFocusedLink({
                 status: true,
                 from: id,
@@ -176,10 +176,7 @@ class Node extends Component {
   }
 }
 
-export default connect(
-  null,
-  {
+export default connect(null, {
     setFocusedLink,
     newLink
-  }
-)(Node);
+})(Node);
