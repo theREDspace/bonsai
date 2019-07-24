@@ -7,9 +7,9 @@ import { deleteAllLinks } from "../../link/LinkActions"
 
 class NodeFooter extends Component {
   static propTypes = {
-  id: PropTypes.string.isRequired,
-  deleteAllLinks: PropTypes.func.isRequired,
-  deleteNode: PropTypes.func.isRequired
+    id: PropTypes.string.isRequired,
+    deleteAllLinks: PropTypes.func.isRequired,
+    deleteNode: PropTypes.func.isRequired
   }
 
   render(){
