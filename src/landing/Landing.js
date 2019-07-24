@@ -42,7 +42,7 @@ export default class Landing extends Component {
   state = {
     scenes: [],
     usedSpace: 0,
-    remainigSpace: 0,
+    remainingSpace: 0,
     redirect: ""
   };
   newScene = () => {
