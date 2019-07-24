@@ -7,7 +7,8 @@ export const FocusedLink = (state = {}, { type, status, from, to, outIndex}) => 
 }
 
 export const links = (state = [], { type, from, to, id, outIndex}) => {
-  console.log("LinkReducer Switch")
+  console.warn("LinkReducer Switch");
+  console.log("THIS IS A TEST");
   switch (type) {
     case "NEW_LINK":
       console.log("NEW_LINK")

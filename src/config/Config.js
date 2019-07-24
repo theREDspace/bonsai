@@ -1,6 +1,7 @@
 import { uuid } from "../lib/math";
 import * as PageReducer from "../page/PageReducers";
 import * as SceneReducers from "../scene/SceneReducers";
+import * as LinkReducers from "../link/LinkReducers";
 
 export const sceneActionTypes = {
     UPDATE_SCENE_TITLE: "UPDATE_SCENE_TITLE",

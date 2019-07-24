@@ -130,6 +130,7 @@ class Node extends Component {
           className="outNode"
           style={{ position: "absolute", left: 205, width: 25, height: 25 }}
           onClick={() => {
+            console.log("out-node 0 id: " + id);
             setFocusedLink({
               status: true,
               from: id,
@@ -150,7 +151,7 @@ class Node extends Component {
               height: 25
             }}
             onClick={() => {
-              console.log("out-node id: " + id);
+              console.log("out-node 1 id: " + id);
               setFocusedLink({
                 status: true,
                 from: id,
@@ -177,6 +178,6 @@ class Node extends Component {
 }
 
 export default connect(null, {
-    setFocusedLink,
-    newLink
+  setFocusedLink,
+  newLink
 })(Node);
