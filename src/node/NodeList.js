@@ -115,7 +115,8 @@ class NodeList extends Component {
                 updateNode,
                 setFocusedLink,
                 deleteAllLinks,
-                deleteNode
+                deleteNode,
+                page
               }}
             />
 

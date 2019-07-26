@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 import { Card, Typography, Icon } from "@material-ui/core";
 import NodeHeader from "./fragments/NodeHeader";
@@ -20,6 +21,7 @@ const styles = {
 class Node extends Component {
   static propTypes = {
     current: PropTypes.bool.isRequired,
+    page: PropTypes.object.isRequired,
     //id: PropTypes.string.isRequired,
     //type: PropTypes.string.isRequired,
     title: PropTypes.string,
@@ -42,7 +44,8 @@ class Node extends Component {
   state = {
     expanded: true,
     collapsed: false,
-    widthAdjustment: 0
+    widthAdjustment: 0,
+    cardHeight: 0
   };
 
   handleExpandChange = expanded => {
@@ -61,6 +64,81 @@ class Node extends Component {
     });
     this.setState({ widthAdjustment: 0 });
   };
+
+  getInArrows() {
+    const {
+      id,
+      page
+    } = this.props;
+    let arrows = [];
+    let arrowStyle = { position: "absolute", left: -14, width: 25, height: 25 }
+    let linkCount = 1;
+    for(let i = 0; i < page.links.length; i++) {
+      if(page.links.to === id)
+      {
+        linkCount++;
+      }
+    }
+    for(let i = 0; i < 1; i++)
+    {
+      arrows.push(
+        <div
+          className="inNode"
+          key={i}
+          style={{
+            ...arrowStyle,
+            top:((this.state.cardHeight - (arrowStyle.height * linkCount)) / 2) + (arrowStyle.height * i)
+          }}
+        >
+          <Icon className="material-icons">keyboard_arrow_left</Icon>
+        </div>
+      )
+    }
+
+    return arrows;
+  }
+
+  getOutArrows() {
+    const {
+      id,
+      setFocusedLink,
+      page
+    } = this.props;
+    let arrows = [];
+    let arrowStyle = { position: "absolute", left: 205, width: 25, height: 25 };
+    let linkCount = 1;
+    for(let i = 0; i < page.links.length; i++) {
+      if(page.links.from === id)
+      {
+        linkCount++;
+      }
+    }
+
+    for (let i = 0; i < linkCount; i++)
+    {
+      arrows.push(
+        <div
+          className="outNode"
+          key={i}
+          style={{
+            ...arrowStyle,
+            top:((this.state.cardHeight - (arrowStyle.height * linkCount)) / 2) + (arrowStyle.height * i)
+          }}
+          onClick={() => {
+            console.log("node id: " + id);
+            setFocusedLink({
+              status: true,
+              from: id,
+              outIndex: i
+            });
+          }}
+        >
+          <Icon className="material-icons">keyboard_arrow_right</Icon>
+        </div>
+      )
+    }
+    return arrows;
+  }
 
   componentWillReceiveProps(nextProps) {
     /*if (nextProps.page.focusedLink.status !== this.props.page.focusedLink.status) {
@@ -93,6 +171,7 @@ class Node extends Component {
     const { widthAdjustment } = this.state;
     return (
       <Card
+        ref="card"
         style={{
           width: `calc(${bounds[0]}px + ${widthAdjustment}px)`
         }}
@@ -105,48 +184,8 @@ class Node extends Component {
             color
           }}
         />
-        <div
-          className="inNode"
-          style={{ position: "absolute", left: -20, width: 25, height: 25 }}
-        >
-          <Icon className="material-icons">keyboard_arrow_left</Icon>
-        </div>
-        <div
-          className="outNode"
-          style={{ position: "absolute", left: 205, width: 25, height: 25 }}
-          onClick={() => {
-            console.log("node id: " + id);
-            setFocusedLink({
-              status: true,
-              from: id,
-              outIndex: 0
-            });
-          }}
-        >
-          <Icon className="material-icons">keyboard_arrow_right</Icon>
-        </div>
-        {type !== "Node" && (
-          <div
-            className="outNode"
-            style={{
-              position: "absolute",
-              left: 205,
-              top: 75,
-              width: 25,
-              height: 25
-            }}
-            onClick={() => {
-              console.log("node id: " + id);
-              setFocusedLink({
-                status: true,
-                from: id,
-                outIndex: 1
-              });
-            }}
-          >
-            <Icon className="material-icons">keyboard_arrow_right</Icon>
-          </div>
-        )}
+        {this.getInArrows()}
+        {this.getOutArrows()}
         <Typography style={styles.body}>{body}</Typography>
         <NodeFooter
           {...{
@@ -159,6 +198,13 @@ class Node extends Component {
         />
       </Card>
     );
+  }
+
+  componentDidMount()
+  {
+    this.setState({
+      cardHeight: ReactDOM.findDOMNode(this.refs.card).getBoundingClientRect().height
+    })
   }
 }
 
